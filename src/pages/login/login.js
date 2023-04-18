@@ -7,15 +7,15 @@ function Login(props) {
     <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
       <Paper elevation={3} sx={{ p: 3 }} style={{ width: '30rem' }}>
         <Box display='flex' justifyContent='center' flexDirection='column'>
-          <Typography>Login</Typography>
+          <Typography variant="h4" component="h1" align="center">Login</Typography>
+          <br></br>
           <TextField
             required
             id="outlined-required"
             label="E-mail"
-            type= "e-mail"
             placeholder="Digite seu e-mail"
           />
-            <br></br>
+          <br></br>
           <TextField
             required
             id="outlined-password-input"
@@ -25,8 +25,40 @@ function Login(props) {
           />
           <br></br>
           <Box>
-            <Button variant='text'>Esqueceu sua senha?</Button>
-            <Button color='primary' variant='contained'>Entrar</Button>
+
+            <Box>
+              <Button
+                color='primary' 
+                variant='contained' 
+                style={{ width: '7rem' }}
+                onClick={() => {
+                  alert('WIP-Entrar');
+                }} 
+              >
+                Entrar
+              </Button>
+
+              <Button
+                color='primary' 
+                variant='contained' 
+                style={{width: '7rem' }}
+                onClick={() => {
+                  alert('WIP-Cadstrar');
+                }} 
+              >
+                Cadastrar
+              </Button>
+            </Box>
+
+
+            <Button 
+              variant='text'
+              onClick={() => {
+                alert('WIP-Esqueceu a senha');
+              }} 
+            >
+              Esqueceu sua senha?
+            </Button>
           </Box>
         </Box>
       </Paper>
