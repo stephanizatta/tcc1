@@ -1,4 +1,4 @@
-@media screen and (max-width: 1330px) {
+/* @media screen and (max-width: 1330px) {
         {
         width: 50%;
         position: absolute;
@@ -16,7 +16,7 @@
         max-height: 10rem;
         margin-top: 2rem;
     }
-}
+} */
 
 body {
     background-color: rgb(255, 255, 255, 0.8);
@@ -26,5 +26,5 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 10px;
-    background: url("C:\Users\Ana Maria\tcc1\public\imagemfundo.png") no-repeat right top fixed;
+    background: url("../../../public/imagemfundo.png") no-repeat right top fixed;
 }

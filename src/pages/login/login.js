@@ -2,7 +2,7 @@ import './login.css';
 import React from 'react';
 import { Box, Button, Checkbox, Input, Paper, TextField, Typography } from '@mui/material';
 
-function Login(props) {
+function Login() {
   return (
     <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
       <Paper elevation={3} sx={{ p: 3 }} style={{ width: '30rem' }}>
@@ -28,34 +28,33 @@ function Login(props) {
 
             <Box>
               <Button
-                color='primary' 
-                variant='contained' 
-                style={{ width: '7rem' }}
+                color='primary'
+                variant='contained'
+                style={{ width: '7rem', marginRight: '10px' }}
                 onClick={() => {
                   alert('WIP-Entrar');
-                }} 
+                }}
               >
                 Entrar
               </Button>
 
               <Button
-                color='primary' 
-                variant='contained' 
-                style={{width: '7rem' }}
+                color='primary'
+                variant='contained'
+                style={{ width: '7rem' }}
                 onClick={() => {
                   alert('WIP-Cadstrar');
-                }} 
+                }}
               >
                 Cadastrar
               </Button>
             </Box>
 
-
-            <Button 
+            <Button
               variant='text'
               onClick={() => {
                 alert('WIP-Esqueceu a senha');
-              }} 
+              }}
             >
               Esqueceu sua senha?
             </Button>
