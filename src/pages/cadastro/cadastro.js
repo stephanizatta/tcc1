@@ -6,11 +6,12 @@ function Cadastro() {
     return (
         <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
             <Paper elevation={3} sx={{ p: 3 }} style={{ width: '40rem' }}>
-                <Box display='flex' justifyContent='center' flexDirection='column'>
+                <Box component="h1" align="center" display='flex' justifyContent='center' flexDirection='column'>
 
-                    <Typography>Cadastro</Typography>
+                    <Typography variant="h4" component="h1" align="center"> Cadastro</Typography>
                     <TextField
                         required
+                        style={{marginTop: '8px' }}
                         id="outlined-required"
                         label="Nome completo"
                         placeholder="Digite seu e-mail"
@@ -18,6 +19,7 @@ function Cadastro() {
 
                     <TextField
                         required
+                        style={{marginTop: '10px' }}
                         id="outlined-password-input"
                         label="CRM"
                         type="password"
@@ -26,6 +28,7 @@ function Cadastro() {
 
                     <TextField
                         required
+                        style={{marginTop: '10px' }}
                         id="outlined-required"
                         label="E-mail"
                         placeholder="Digite seu e-mail"
@@ -33,6 +36,7 @@ function Cadastro() {
 
                     <TextField
                         required
+                        style={{marginTop: '10px' }}
                         id="outlined-password-input"
                         label="Senha"
                         type="password"
@@ -41,6 +45,7 @@ function Cadastro() {
 
                     <TextField
                         required
+                        style={{marginTop: '10px' }}
                         id="outlined-password-input"
                         label="Repita sua senha"
                         type="password"
@@ -51,7 +56,7 @@ function Cadastro() {
                         <Button
                             color='primary'
                             variant='contained'
-                            style={{ width: '7rem' }}
+                            style={{ width: '7rem', marginTop: '5px'  }}
                             onClick={() => {
                                 alert('WIP-Ok');
                             }}
