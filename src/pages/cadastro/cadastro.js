@@ -1,6 +1,7 @@
 import './cadastro.css';
 import React from 'react';
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function Cadastro() {
     return (
@@ -53,16 +54,15 @@ function Cadastro() {
                     />
 
                     <Box>
-                        <Button
-                            color='primary'
-                            variant='contained'
-                            style={{ width: '7rem', marginTop: '5px'  }}
-                            onClick={() => {
-                                alert('WIP-Ok');
-                            }}
-                        >
-                            OK
-                        </Button>
+                        <Link to='/home'>
+                            <Button
+                                color='primary'
+                                variant='contained'
+                                style={{ width: '7rem', marginTop: '5px'  }}
+                            >
+                                OK
+                            </Button>
+                        </Link>
                     </Box>
                 </Box>
             </Paper>

@@ -1,6 +1,7 @@
 import './login.css';
 import React from 'react';
 import { Box, Button, Paper, TextField, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function Login() {
   return (
@@ -8,14 +9,14 @@ function Login() {
       <Paper elevation={3} sx={{ p: 3 }} style={{ width: '30rem' }}>
         <Box display='flex' justifyContent='center' flexDirection='column'>
           <Typography variant="h4" component="h1" align="center">Login</Typography>
-          <br></br>
+          <br/>
           <TextField
             required
             id="outlined-required"
             label="E-mail"
             placeholder="Digite seu e-mail"
           />
-          <br></br>
+          <br/>
           <TextField
             required
             id="outlined-password-input"
@@ -23,41 +24,38 @@ function Login() {
             type="password"
             autoComplete="current-password"
           />
-          <br></br>
+          <br/>
           <Box>
 
             <Box>
-              <Button
-                color='primary'
-                variant='contained'
-                style={{ width: '7rem', marginRight: '10px' }}
-                onClick={() => {
-                  alert('WIP-Entrar');
-                }}
-              >
-                Entrar
-              </Button>
+              <Link to='/home'>
+                <Button
+                  color='primary'
+                  variant='contained'
+                  style={{ width: '7rem', marginRight: '10px' }}
+                >
+                  Entrar
+                </Button>
+              </Link>
 
-              <Button
-                color='primary'
-                variant='contained'
-                style={{ width: '7rem' }}
-                onClick={() => {
-                  alert('WIP-Cadstrar');
-                }}
-              >
-                Cadastrar
-              </Button>
+              <Link to='/cadastro'>
+                <Button
+                  color='primary'
+                  variant='contained'
+                  style={{ width: '7rem' }}
+                >
+                  Cadastrar
+                </Button>
+              </Link>
             </Box>
 
-            <Button
-              variant='text'
-              onClick={() => {
-                alert('WIP-Esqueceu a senha');
-              }}
-            >
-              Esqueceu sua senha?
-            </Button>
+            <Link to='esqueceu-senha'>
+              <Button
+                variant='text'
+              >
+                Esqueceu sua senha?
+              </Button>
+            </Link>
           </Box>
         </Box>
       </Paper>
