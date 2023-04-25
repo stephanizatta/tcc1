@@ -14,12 +14,14 @@ function Home() {
                         escolha uma opção
                     </Typography>
                     <br/>
-                    <Button
-                        variant='text'
-                    >
-                        Cadastrar relatório
-                    </Button>
-                   
+                    <Link to='/cadastro-relatorio' align='center'>
+                        <Button
+                            variant='text'
+                        >
+                            Cadastrar relatório
+                        </Button>
+                    </Link>
+
                     <Button
                         variant='text'
                     >
