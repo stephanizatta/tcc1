@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Home() {
     return (
+        <div className='backgroundHome'>
         <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
             <Paper elevation={3} sx={{ p: 3 }} style={{ width: '30rem' }}>
                 <Box display='flex' justifyContent='center' flexDirection='column'>
@@ -56,6 +57,7 @@ function Home() {
                 </Box>
             </Paper>
         </Box>
+        </div>
     );
 }
 

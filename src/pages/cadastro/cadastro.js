@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Cadastro() {
     return (
+        <div className='backgroundCadastro'>
         <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
             <Paper elevation={3} sx={{ p: 3 }} style={{ width: '40rem' }}>
                 <Box component="h1" align="center" display='flex' justifyContent='center' flexDirection='column'>
@@ -67,6 +68,7 @@ function Cadastro() {
                 </Box>
             </Paper>
         </Box>
+        </div>
     );
 }
 
