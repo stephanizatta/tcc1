@@ -4,6 +4,8 @@ import Login from './pages/login/login';
 import Cadastro from './pages/cadastro/cadastro';
 import EsqueceuSenha from './pages/esqueceu-senha/esqueceu-senha';
 import CadastroRelatorio from './pages/cadastro-relatorio/cadastro-relatorio';
+import CadastroMaterial from './pages/cadastro-material/cadastro-material';
+import CadastroMedico from './pages/cadastro-medico/cadastro-medico';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ const router = createBrowserRouter([
   {
     path: "/cadastro-relatorio",
     element: <CadastroRelatorio />,
+  },
+  {
+    path: "/cadastro-material",
+    element: <CadastroMaterial />,
+  },
+  {
+    path: "/cadastro-medico",
+    element: <CadastroMedico />,
   }
 ])
 

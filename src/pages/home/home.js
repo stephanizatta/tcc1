@@ -23,17 +23,21 @@ function Home() {
                         </Button>
                     </Link>
 
-                    <Button
-                        variant='text'
-                    >
-                        Cadastrar material
-                    </Button>
+                    <Link to='/cadastro-material' align='center'>
+                        <Button
+                            variant='text'
+                        >
+                            Cadastrar material
+                        </Button>
+                    </Link>
 
-                    <Button
-                        variant='text'
-                    >
-                        Cadastrar médico
-                    </Button>
+                    <Link to='/cadastro-medico' align='center'>
+                        <Button
+                            variant='text'
+                        >
+                            Cadastrar médico
+                        </Button>
+                    </Link>
 
                     <Button
                         variant='text'
@@ -49,7 +53,9 @@ function Home() {
 
                     <Link to='/' align="center">
                         <Button
-                            variant='text'
+                            color='primary'
+                            variant='contained'
+                            style={{ width: '7rem' }}
                         >
                             Sair
                         </Button>

@@ -34,7 +34,7 @@ function Login() {
                 <Button
                   color='primary'
                   variant='contained'
-                  style={{ width: '7rem', marginRight: '10px' }}
+                  style={{ width: '7rem', marginRight: '1rem' }}
                 >
                   Entrar
                 </Button>
