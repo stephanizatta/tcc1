@@ -17,15 +17,14 @@ function Login() {
   }
 
   function handleLogin() {
-    if (email === 'admin' && password === 'admin') {
+    if ((email === 'admin' && password === 'admin') ||
+        (email === 'instrumentador' && password === 'instrumentador') ||
+        (email === 'medico' && password === 'medico') ||
+        (email === 'financeiro' && password === 'financeiro')) {
       window.location.href = '/home';
     } else {
       setErrorMessage('Credenciais inválidas. Por favor, verifique seu e-mail e senha.');
     }
-  }
-
-  function handleCadastro() {
-    window.location.href = '/cadastro';
   }
 
   return (    
@@ -66,7 +65,7 @@ function Login() {
             )}
 
             <Box>
-              <Box>
+              <Box display="flex" justifyContent="center">
                 <Button
                   color='primary'
                   variant='contained'
@@ -75,25 +74,15 @@ function Login() {
                 >
                   Entrar
                 </Button>
-
-                <Button
-                  color='primary'
-                  variant='contained'
-                  style={{ width: '7rem' }}
-                  onClick={handleCadastro}
-                >
-                  Cadastrar
-                </Button>
               </Box>
 
-              <Link to='esqueceu-senha'>
-                <Button
-                  variant='text'
-                >
-                  Esqueceu sua senha?
-                </Button>
-              </Link>
-
+              <Box display="flex" justifyContent="center">
+                <Link to='esqueceu-senha'>
+                  <Button variant='text'>
+                    Esqueceu sua senha?
+                  </Button>
+                </Link>
+              </Box>
             </Box>
           </Box>
         </Paper>
