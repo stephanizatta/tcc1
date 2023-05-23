@@ -17,11 +17,18 @@ function Login() {
   }
 
   function handleLogin() {
-    if ((email === 'admin' && password === 'admin') ||
-        (email === 'instrumentador' && password === 'instrumentador') ||
-        (email === 'medico' && password === 'medico') ||
-        (email === 'financeiro' && password === 'financeiro')) {
-      window.location.href = '/home';
+    if (email === 'admin' && password === 'admin') {
+      window.location.href = '/home?isAdmin=true';
+
+    } else if (email === 'instrumentador' && password === 'instrumentador'){
+      window.location.href = '/home?isInstrumentador=true';
+
+    } else if  (email === 'medico' && password === 'medico') {
+      window.location.href = '/home?isMedico=true';
+
+    } else if (email === 'financeiro' && password === 'financeiro') {
+      window.location.href = '/home?isFinanceiro=true';
+      
     } else {
       setErrorMessage('Credenciais inválidas. Por favor, verifique seu e-mail e senha.');
     }
