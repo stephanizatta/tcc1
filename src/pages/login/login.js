@@ -18,11 +18,8 @@ function Login() {
 
   function handleLogin() {
     if (email === 'admin' && password === 'admin') {
-      // Lógica de login para o usuário 'admin'
-      // Redirecionar para a página '/home'
       window.location.href = '/home';
     } else {
-      // Credenciais inválidas
       setErrorMessage('Credenciais inválidas. Por favor, verifique seu e-mail e senha.');
     }
   }
