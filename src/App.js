@@ -1,11 +1,13 @@
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 import Home from './pages/home/home';
 import Login from './pages/login/login';
-import Cadastro from './pages/cadastro/cadastro';
 import EsqueceuSenha from './pages/esqueceu-senha/esqueceu-senha';
 import CadastroRelatorio from './pages/cadastro-relatorio/cadastro-relatorio';
 import CadastroMaterial from './pages/cadastro-material/cadastro-material';
-import CadastroMedico from './pages/cadastro-medico/cadastro-medico';
+import CadastroUsuario from './pages/cadastro-usuario/cadastro-usuario';
+import RelatoriosCadastrados from './pages/relatorios-cadastrados/relatorios-cadastrados';
+import MateriaisCadastrados from './pages/materiais-cadastrados/materiais-cadastrados';
+import UsuariosCadastrados from './pages/usuarios-cadastrados/usuarios-cadastrados';
 
 const router = createBrowserRouter([
   {
@@ -15,10 +17,6 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home />,
-  },
-  {
-    path: "/cadastro",
-    element: <Cadastro />,
   },
   {
     path: "/esqueceu-senha",
@@ -33,8 +31,20 @@ const router = createBrowserRouter([
     element: <CadastroMaterial />,
   },
   {
-    path: "/cadastro-medico",
-    element: <CadastroMedico />,
+    path: "/cadastro-usuario",
+    element: <CadastroUsuario />,
+  },
+  {
+    path: "/relatorios-cadastrados",
+    element: <RelatoriosCadastrados />,
+  },
+  {
+    path: "/materiais-cadastrados",
+    element: <MateriaisCadastrados />,
+  },
+  {
+    path: "/usuarios-cadastrados",
+    element: <UsuariosCadastrados />,
   }
 ])
 

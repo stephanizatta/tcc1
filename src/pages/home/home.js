@@ -29,34 +29,34 @@ function Home() {
 
                         {isAdmin && (
                         <React.Fragment>
-                            <Link align='center'>
+                            <Link to='/cadastro-relatorio' align='center'>
                                 <Button variant='text'>
-                                    Criar, Editar e Excluir Relatório
+                                    Cadastrar Novo Relatório
                                 </Button>
                             </Link>
-                            <Link to='/cadastro-relatorio' align='center'>
+                            <Link to='/relatorios-cadastrados' align='center'>
                                 <Button variant='text'>
                                     Ver Relatórios Cadastrados
                                 </Button>
                             </Link>
                             <Divider/>
-                            <Link align='center'>
+                            <Link to="/cadastro-material" align='center'>
                                 <Button variant='text'>
-                                    Criar, Editar e Excluir Materiais
+                                Cadastrar Novo Material
                                 </Button>
                             </Link>
-                            <Link to='/cadastro-material' align='center'>
+                            <Link to='/materiais-cadastrados' align='center'>
                                 <Button variant='text'>
                                     Ver Materiais Cadastrados
                                 </Button>
                             </Link>
                             <Divider/>
-                            <Link align='center'>
+                            <Link to='/cadastro-usuario' align='center'>
                                 <Button variant='text'>
-                                    Criar, Editar e Excluir Usuários
+                                    Cadastrar Novo Usuário
                                 </Button>
                             </Link>
-                            <Link to='/cadastro-medico' align='center'>
+                            <Link to='/usuarios-cadastrados' align='center'>
                                 <Button variant='text'>
                                     Ver Usuários Cadastrados
                                 </Button>
@@ -68,7 +68,7 @@ function Home() {
                         <React.Fragment>
                             <Link align='center'>
                                 <Button variant='text'>
-                                    Criar, Editar e Excluir Relatório
+                                    Criar, Editar ou Excluir Relatório
                                 </Button>
                             </Link>
                             <Link to='/cadastro-relatorio' align='center'>
@@ -79,7 +79,7 @@ function Home() {
                             <Divider/>
                             <Link align='center'>
                                 <Button variant='text'>
-                                    Criar, Editar e Excluir Materiais
+                                    Criar, Editar ou Excluir Materiais
                                 </Button>
                             </Link>
                             <Link to='/cadastro-material' align='center'>
@@ -90,7 +90,7 @@ function Home() {
                             <Divider/>
                             <Link align='center'>
                                 <Button variant='text'>
-                                    Criar, Editar e Excluir Médicos
+                                    Criar, Editar ou Excluir Médicos
                                 </Button>
                             </Link>
                             <Link to='/cadastro-medico' align='center'>
