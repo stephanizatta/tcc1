@@ -1,3 +1,4 @@
+import './cadastro-usuario.css';
 import { Box, Button, Paper, TextField, Typography, Alert, AlertTitle, CircularProgress } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -32,7 +33,7 @@ function CadastroUsuario() {
     return (
         <div className='backgroundCadastro'>
             <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
-                <Paper elevation={3} sx={{ p: 3 }} style={{ width: '40rem' }}>
+                <Paper elevation={3} sx={{ p: 3 }} style={{ width: '32rem' }}>
                     <Box component="h1" align="center" display='flex' justifyContent='center' flexDirection='column'>
 
                         <Typography variant="h4" component="h1" align="center"> Cadastro</Typography>
@@ -56,7 +57,7 @@ function CadastroUsuario() {
                                 label="Tipo de usuário"
                                 onChange={handleChange}
                                 >
-                                <MenuItem value={10}>Admnistrador</MenuItem>
+                                <MenuItem value={10}>Administrador</MenuItem>
                                 <MenuItem value={20}>Financeiro</MenuItem>
                                 <MenuItem value={30}>Instrumentador</MenuItem>
                                 <MenuItem value={40}>Médico</MenuItem>

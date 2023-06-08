@@ -1,3 +1,4 @@
+import './cadastro-relatorio.css';
 import { Box, Button, Paper, TextField, Typography, Divider, Alert, AlertTitle, CircularProgress } from '@mui/material';
 import React, { useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -73,12 +74,13 @@ function CadastroRelatorio() {
   }
 
   return (
-    <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
-      <Paper elevation={3} sx={{ p: 3 }} style={{ width: '90%' }}>
-        <Box display='flex' justifyContent='center' flexDirection='column'>
-          <Typography variant="h4" component="h1" align="center">
-            Cadastro de Relatório
-          </Typography>
+    <div className='backgroundCadastroRelatorio'>
+      <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
+        <Paper elevation={3} sx={{ p: 3 }} style={{ width: '90%' }}>
+          <Box display='flex' justifyContent='center' flexDirection='column'>
+            <Typography variant="h4" component="h1" align="center">
+              Cadastro de Relatório
+                </Typography>
 
           <br />
 
@@ -258,6 +260,7 @@ function CadastroRelatorio() {
         </Box>
       </Paper>
     </Box>
+    </div>
   );
 }
 

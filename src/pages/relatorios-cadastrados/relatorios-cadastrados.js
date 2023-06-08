@@ -1,3 +1,4 @@
+import './relatorios-cadastrados.css';
 import { Box, Button, Paper, Typography, Grid } from '@mui/material';
 import React from 'react';
 import Card from '@mui/material/Card';
@@ -75,6 +76,7 @@ function RelatoriosCadastrados() {
     }
 
     return (
+    <div className='backgroundRelatoriosCadastrados'>
         <Box display="flex" justifyContent="center" style={{ width: '100%' }}>
             <Paper elevation={3} sx={{ p: 3 }} style={{ width: '90%' }}>
                 <Box display="flex" justifyContent="center" flexDirection="column">
@@ -101,6 +103,7 @@ function RelatoriosCadastrados() {
                 </Box>
             </Paper>
         </Box>
+    </div>
     );
 }
 

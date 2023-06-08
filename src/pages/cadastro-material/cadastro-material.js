@@ -1,3 +1,4 @@
+import './cadastro-material.css';
 import React, { useState } from 'react';
 import { Box, Button, Paper, TextField, Typography, Alert, AlertTitle, CircularProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -41,12 +42,13 @@ function CadastroMaterial() {
     }
 
   return (
-    <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
-        <Paper elevation={3} sx={{ p: 3 }} style={{ width: '30rem' }}>
-            <Box display='flex' justifyContent='center' flexDirection='column'>
-                    <Typography variant='h4' component='h1' align='center'>
-                        Cadastro de Material
-                    </Typography>
+    <div className='backgroundCadastroMateriais'>
+        <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
+            <Paper elevation={3} sx={{ p: 3 }} style={{ width: '30rem' }}>
+                <Box display='flex' justifyContent='center' flexDirection='column'>
+                        <Typography variant='h4' component='h1' align='center'>
+                            Cadastro de Material
+                        </Typography>
 
                     <br />
 
@@ -105,11 +107,11 @@ function CadastroMaterial() {
                             </Button>
                         </>
                     )}
-                </Box>
-
+                    </Box>
             </Box>
         </Paper>
     </Box>
+    </div>
   );
 }
 

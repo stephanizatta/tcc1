@@ -1,3 +1,4 @@
+import './usuarios-cadastrados.css';
 import { Box, Button, Paper, Typography, Grid } from '@mui/material';
 import React from 'react';
 import Card from '@mui/material/Card';
@@ -15,6 +16,7 @@ function UsuariosCadastrados() {
     }
 
     return (
+    <div className='backgroundUsuariosCadastrados'>
         <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
             <Paper elevation={3} sx={{ p: 3 }} style={{ width: '90%' }}>
                 <Box display='flex' justifyContent='center' flexDirection='column'>
@@ -250,6 +252,7 @@ function UsuariosCadastrados() {
                 </Box>
             </Paper>
         </Box>
+    </div>
     );
 }
 
