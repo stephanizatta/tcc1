@@ -8,6 +8,11 @@ import CadastroUsuario from './pages/cadastro-usuario/cadastro-usuario';
 import RelatoriosCadastrados from './pages/relatorios-cadastrados/relatorios-cadastrados';
 import MateriaisCadastrados from './pages/materiais-cadastrados/materiais-cadastrados';
 import UsuariosCadastrados from './pages/usuarios-cadastrados/usuarios-cadastrados';
+import CadastroMedicos from './pages/cadastro-medicos/cadastro-medicos';
+import MedicosCadastrados from './pages/medicos-cadastrados/medicos-cadastrados';
+import AprovarRelatorio from './pages/aprovar-relatorio/aprovar-relatorio';
+import RelatoriosAssinados from './pages/relatorios-assinados/relatorios-assinados';
+import AssinarRelatorio from './pages/assinar-relatorio/assinar-relatorio';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +50,26 @@ const router = createBrowserRouter([
   {
     path: "/usuarios-cadastrados",
     element: <UsuariosCadastrados />,
+  },
+  {
+    path: "/cadastro-medicos",
+    element: <CadastroMedicos />,
+  },
+  {
+    path: "/medicos-cadastrados",
+    element: <MedicosCadastrados />,
+  },
+  {
+    path: "/aprovar-relatorio",
+    element: <AprovarRelatorio />,
+  },
+  {
+    path: "/relatorios-assinados",
+    element: <RelatoriosAssinados />,
+  },
+  {
+    path: "/assinar-relatorio",
+    element: <AssinarRelatorio />,
   }
 ])
 

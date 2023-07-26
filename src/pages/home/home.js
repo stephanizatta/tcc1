@@ -39,6 +39,21 @@ function Home() {
                                     Ver Relatórios Cadastrados
                                 </Button>
                             </Link>
+                            <Link to='/aprovar-relatorio' align='center'>
+                                <Button variant='text'>
+                                    Aprovar Relatório
+                                </Button>
+                            </Link>
+                            <Link to='/relatorios-assinados' align='center'>
+                                <Button variant='text'>
+                                    Ver Relatórios Assinados
+                                </Button>
+                            </Link>
+                            <Link to='/assinar-relatorio' align='center'>
+                                <Button variant='text'>
+                                    Assinar Relatório
+                                </Button>
+                            </Link>
                             <Divider/>
                             <Link to="/cadastro-material" align='center'>
                                 <Button variant='text'>
@@ -66,36 +81,41 @@ function Home() {
 
                         {isInstrumentador && (
                         <React.Fragment>
-                            <Link align='center'>
+                            <Link to='/cadastro-relatorio' align='center'>
                                 <Button variant='text'>
-                                    Criar, Editar ou Excluir Relatório
+                                    Cadastrar Novo Relatório
                                 </Button>
                             </Link>
-                            <Link to='/cadastro-relatorio' align='center'>
+                            <Link to='/relatorios-cadastrados' align='center'>
                                 <Button variant='text'>
                                     Ver Relatórios Cadastrados
                                 </Button>
                             </Link>
-                            <Divider/>
-                            <Link align='center'>
+                            <Link to='/relatorios-assinados' align='center'>
                                 <Button variant='text'>
-                                    Criar, Editar ou Excluir Materiais
+                                    Ver Relatórios Assinados
                                 </Button>
                             </Link>
-                            <Link to='/cadastro-material' align='center'>
+                            <Divider/>
+                            <Link to="/cadastro-material" align='center'>
+                                <Button variant='text'>
+                                    Cadastrar Novo Material
+                                </Button>
+                            </Link>
+                            <Link to='/materiais-cadastrados' align='center'>
                                 <Button variant='text'>
                                     Ver Materiais Cadastrados
                                 </Button>
                             </Link>
                             <Divider/>
-                            <Link align='center'>
+                            <Link  to='/cadastro-medicos' align='center'>
                                 <Button variant='text'>
-                                    Criar, Editar ou Excluir Médicos
+                                    Cadastrar Novo Médico
                                 </Button>
                             </Link>
-                            <Link to='/cadastro-medico' align='center'>
+                            <Link to='/medicos-cadastrados' align='center'>
                                 <Button variant='text'>
-                                    Ver Usuários Cadastrados
+                                    Ver Médicos Cadastrados
                                 </Button>
                             </Link>
                         </React.Fragment>
@@ -103,13 +123,13 @@ function Home() {
 
                         {isMedico && (
                         <React.Fragment>
-                            <Link align='center'>
+                            <Link to='/relatorios-assinados' align='center'>
                                 <Button variant='text'>
                                     Ver Relatórios Assinados
                                 </Button>
                             </Link>
                             <Divider/>
-                            <Link align='center'>
+                            <Link to='/assinar-relatorio' align='center'>
                                 <Button variant='text'>
                                     Assinar Relatório
                                 </Button>
@@ -124,8 +144,13 @@ function Home() {
                                     Ver Relatórios Cadastrados
                                 </Button>
                             </Link>
+                            <Link to='/relatorios-assinados' align='center'>
+                                <Button variant='text'>
+                                    Ver Relatórios Assinados
+                                </Button>
+                            </Link>
                             <Divider/>                             
-                            <Link to='/cadastro-medico' align='center'>
+                            <Link to='/aprovar-relatorio' align='center'>
                                 <Button variant='text'>
                                     Aprovar Relatório
                                 </Button>
