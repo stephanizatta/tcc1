@@ -1,4 +1,4 @@
-.backgroundHome {
+.backgroundRelatoriosAssinados {
     background-color: rgb(255, 255, 255, 0.8);
     position: fixed;
     width: 100%;
@@ -33,3 +33,7 @@
     margin: 10px 0;
   }
 }
+  .backgroundRelatoriosAssinados {
+    height: 500px;
+    overflow-y: scroll;
+  }

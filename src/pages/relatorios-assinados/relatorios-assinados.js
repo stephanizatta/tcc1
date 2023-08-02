@@ -3,6 +3,7 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useNavigate } from 'react-router-dom';
+import './relatorios-assinados.css';
 
 const card = (
   <React.Fragment>
@@ -78,7 +79,7 @@ function RelatoriosAssinados() {
     return (
     <div className='backgroundRelatoriosAssinados'>
         <Box display="flex" justifyContent="center" style={{ width: '100%' }}>
-            <Paper elevation={3} sx={{ p: 3 }} style={{ width: '90%' }}>
+            <Paper elevation={3} sx={{ p: 3 }} style={{ width: '80%' }}>
                 <Box display="flex" justifyContent="center" flexDirection="column">
                     <Typography variant="h4" component="h1" align="center">
                         Relatórios Assinados
