@@ -10,34 +10,39 @@
     background-size: cover;
 }
 
-/* Estilos padrão para todos os dispositivos */
-body {
-  font-size: 16px;
-  line-height: 1.5;
+/* max-width  */
+@media screen and (max-width: 600px) {
+	.um {
+		background: #F9C;
+	}
+	span.lt600 {
+		display: inline-block;
+	}
 }
 
-/* Media query para dispositivos com largura de tela até 768px (por exemplo, smartphones em modo retrato) */
-@media (max-width: 768px) {
-  body {
-    font-size: 14px;
-  }
-  /* Outras regras de estilo específicas para dispositivos menores */
+/* min-width */
+@media screen and (min-width: 900px) {
+	.dois {
+		background: #F90;
+	}
+	span.gt900 {
+		display: inline-block;
+	}
 }
 
-/* Media query para dispositivos com largura de tela entre 769px e 1024px (por exemplo, tablets em modo retrato) */
-@media (min-width: 769px) and (max-width: 1024px) {
-  body {
-    font-size: 18px;
-  }
-  /* Outras regras de estilo específicas para tablets e dispositivos de tamanho intermediário */
+/* min-width & max-width */
+@media screen and (min-width: 600px) and (max-width: 900px) {
+	.tres {
+		background: #9CF;
+	}
+	span.bt600-900 {
+		display: inline-block;
+	}
 }
 
-/* Media query para dispositivos com largura de tela acima de 1024px (por exemplo, tablets em modo paisagem e desktops) */
-@media (min-width: 1025px) {
-  body {
-    font-size: 20px;
-  }
-  /* Outras regras de estilo específicas para telas maiores */
+/* max device width */
+@media screen and (max-device-width: 480px) {
+	.iphone {
+		background: #ccc;
+	}
 }
-
-
