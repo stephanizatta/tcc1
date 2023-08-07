@@ -10,20 +10,25 @@
     background-size: cover;
 }
 
-/* Estilos para dispositivos móveis */
-@media (max-width: 767px) {
+/* Estilos base para a caixa */
+.caixa {
+  height: 200px;
+  background-color: #3498db;
 }
 
-/* Estilos para tablets e telas maiores */
-@media (min-width: 768px) {
+/* Estilos para telas grandes */
+@media screen and (min-width: 768px) {
+  .caixa {
+    width: 50%;
+    margin: 0 auto; /* Centraliza a caixa horizontalmente */
+  }
 }
 
-/* Estilos para computadores e telas grandes */
-@media (min-width: 992px) {
-}
-
-/* Estilos para telas maiores, como monitores de desktop */
-@media (min-width: 1200px) {
+/* Estilos para telas pequenas (celulares) */
+@media screen and (max-width: 767px) {
+  .caixa {
+    width: 100%;
+  }
 }
 
 
