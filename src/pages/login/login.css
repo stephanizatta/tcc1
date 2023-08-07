@@ -10,28 +10,31 @@
     background-size: cover;
 }
 
-/* max-width  */
-@media screen and (max-width: 600px) {
-	span.lt600 {
-		display: inline-block;
-	}
-}
+@media only screen and (max-device-width: 900px) {
+  .backgroundLogin {
+    width: 350px;
+    padding: 480px;
+  }
+  }
 
 /* min-width */
 @media screen and (min-width: 900px) {
-	span.gt900 {
-		display: inline-block;
-	}
+	.backgroundLogin {
+    width: 350px;
+    padding: 480px;
+  }
 }
 
 /* min-width & max-width */
 @media screen and (min-width: 600px) and (max-width: 900px) {
-	span.bt600-900 {
-		display: inline-block;
-	}
+	.backgroundLogin {
+    width: 350px;
+    padding: 480px;
+  }
 }
 
 /* max device width */
-@media screen and (max-device-width: 480px) {
-
+.backgroundLogin {
+  width: 350px;
+  padding: 480px;
 }
