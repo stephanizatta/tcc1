@@ -10,26 +10,20 @@
     background-size: cover;
 }
 
-/* Desktop */
-@media only screen and (min-width: 768px) {
-  body {
-    width: 80%;
-    margin: 0 auto;
-  }
+/* Estilos para dispositivos móveis */
+@media (max-width: 767px) {
 }
 
-/* Mobile */
-@media only screen and (max-width: 767px) {
-  body {
-    width: 100%;
-  }
-
-  header {
-    text-align: center;
-  }
-
-  nav li {
-    display: block;
-    margin: 10px 0;
-  }
+/* Estilos para tablets e telas maiores */
+@media (min-width: 768px) {
 }
+
+/* Estilos para computadores e telas grandes */
+@media (min-width: 992px) {
+}
+
+/* Estilos para telas maiores, como monitores de desktop */
+@media (min-width: 1200px) {
+}
+
+
