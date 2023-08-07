@@ -10,25 +10,34 @@
     background-size: cover;
 }
 
-/* Estilos base para a caixa */
-.caixa {
-  height: 200px;
-  background-color: #3498db;
+/* Estilos padrão para todos os dispositivos */
+body {
+  font-size: 16px;
+  line-height: 1.5;
 }
 
-/* Estilos para telas grandes */
-@media screen and (min-width: 768px) {
-  .caixa {
-    width: 50%;
-    margin: 0 auto; /* Centraliza a caixa horizontalmente */
+/* Media query para dispositivos com largura de tela até 768px (por exemplo, smartphones em modo retrato) */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
   }
+  /* Outras regras de estilo específicas para dispositivos menores */
 }
 
-/* Estilos para telas pequenas (celulares) */
-@media screen and (max-width: 767px) {
-  .caixa {
-    width: 100%;
+/* Media query para dispositivos com largura de tela entre 769px e 1024px (por exemplo, tablets em modo retrato) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  body {
+    font-size: 18px;
   }
+  /* Outras regras de estilo específicas para tablets e dispositivos de tamanho intermediário */
+}
+
+/* Media query para dispositivos com largura de tela acima de 1024px (por exemplo, tablets em modo paisagem e desktops) */
+@media (min-width: 1025px) {
+  body {
+    font-size: 20px;
+  }
+  /* Outras regras de estilo específicas para telas maiores */
 }
 
 
