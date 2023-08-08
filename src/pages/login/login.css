@@ -12,15 +12,19 @@
 
 @media only screen and (max-device-width: 900px) {
   .backgroundLogin {
-    width: 350px;
+    width: 100%;
+    top: 50%;
+    left: 50%;
     padding: 480px;
-  }
+    }
   }
 
 /* min-width */
 @media screen and (min-width: 900px) {
 	.backgroundLogin {
-    width: 350px;
+    width: 100%;
+    top: 50%;
+    left: 50%;
     padding: 480px;
   }
 }
@@ -28,13 +32,19 @@
 /* min-width & max-width */
 @media screen and (min-width: 600px) and (max-width: 900px) {
 	.backgroundLogin {
-    width: 350px;
+    width: 100%;
+    top: 50%;
+    left: 50%;
     padding: 480px;
   }
 }
 
 /* max device width */
-.backgroundLogin {
-  width: 350px;
-  padding: 480px;
+@media screen and (max-device-width: 480px) {
+	.backgroundLogin {
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    padding: 480px;
+  }
 }
