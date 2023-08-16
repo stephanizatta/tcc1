@@ -5,12 +5,13 @@ import { useNavigate } from 'react-router-dom';
 function CadastroMedicos() {
     const [isUsuarioCadastrado, setIsUsuarioCadastrado] = useState(false);
     const [isRedirecting, setIsRedirecting] = useState(false);
-    const navigate = useNavigate ();
+    const navigate = useNavigate ();    
+    const session = JSON.parse(localStorage.getItem("user_session"));
+    const userType = session.data.user.userType;
 
     function handleBackHome() {
-        navigate('/home?isAdmin=true');
+        navigate('/home?is'+{userType}+'=true');
     }
-
     function handleOk() {
         setIsUsuarioCadastrado(true);
         setIsRedirecting(true);

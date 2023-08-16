@@ -10,11 +10,12 @@ import { useNavigate } from 'react-router-dom';
 
 function UsuariosCadastrados() {
     const navigate = useNavigate();
+    const session = JSON.parse(localStorage.getItem("user_session"));
+    const userType = session.data.user.userType;
 
     function handleBackHome() {
-        navigate('/home?isAdmin=true');
+        navigate('/home?is'+{userType}+'=true');
     }
-
     return (
     <div className='backgroundUsuariosCadastrados'>
         <Box display='flex' justifyContent='center' style={{ width: '100%' }}>

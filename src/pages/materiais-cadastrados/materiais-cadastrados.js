@@ -10,10 +10,12 @@ import { useNavigate } from 'react-router-dom';
 
 function MateriaisCadastrados() {
     const navigate = useNavigate();
+   const session = JSON.parse(localStorage.getItem("user_session"));
+   const userType = session.data.user.userType;
 
-    function handleBackHome() {
-        navigate('/home?isAdmin=true');
-    }
+   function handleBackHome() {
+       navigate('/home?is'+{userType}+'=true');
+   }
 
     return (
         <div className='backgroundMateriaisCadastrados'>
