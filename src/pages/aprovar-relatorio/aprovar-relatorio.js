@@ -6,11 +6,12 @@ import CardContent from '@mui/material/CardContent';
 import ClearIcon from '@mui/icons-material/Clear';
 import CheckIcon from '@mui/icons-material/Check';
 import { useNavigate } from 'react-router-dom';
+import './aprovar-relatorio.css';
 
 const card = (
   <React.Fragment>
     <CardContent>
-        <Grid container spacing={2}>
+        <Grid container spacing={8}>
             <Grid item xs={4}>
                 <Box>
                     <Typography variant="h5" component="div">
@@ -33,7 +34,7 @@ const card = (
                 </Box>
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={6}>
                 <Box>
                     <Typography variant="h5" component="div">
                         Informações adicionais
@@ -80,7 +81,7 @@ function AprovarRelatorio() {
     return (
     <div className='backgroundRelatoriosCadastrados'>
         <Box display="flex" justifyContent="center" style={{ width: '100%' }}>
-            <Paper elevation={3} sx={{ p: 3 }} style={{ width: '90%' }}>
+            <Paper elevation={3} sx={{ p: 3 }} style={{ width: '80%' }}>
                 <Box display="flex" justifyContent="center" flexDirection="column">
                     <Typography variant="h4" component="h1" align="center">
                         Relatórios Cadastrados

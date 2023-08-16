@@ -10,17 +10,29 @@
     background-size: cover;
 }
 
-@media screen and (min-width: 1640px) {
-    .backgroundRelatoriosCadastrados {
-      margin: 1em 2em;
-    }
+/* Desktop */
+@media only screen and (min-width: 768px) {
+  body {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+/* Mobile */
+@media only screen and (max-width: 767px) {
+  body {
+    width: 100%;
   }
 
-  @media screen and (max-width: 1076px) {
-    .backgroundRelatoriosCadastrados {
-      margin: 1em 2em;
-    }
+  header {
+    text-align: center;
   }
+
+  nav li {
+    display: block;
+    margin: 10px 0;
+  }
+}
 
   .backgroundRelatoriosCadastrados {
     height: 500px;

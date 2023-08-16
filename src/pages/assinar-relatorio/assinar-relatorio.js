@@ -5,11 +5,12 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { useNavigate } from 'react-router-dom';
+import './assinar-relatorio.css';
 
 const card = (
   <React.Fragment>
     <CardContent>
-        <Grid container spacing={2}>
+        <Grid container spacing={9}>
             <Grid item xs={4}>
                 <Box>
                     <Typography variant="h5" component="div">
@@ -30,9 +31,9 @@ const card = (
                         Lote: 4321
                     </Typography>
                 </Box>
-            </Grid>
+                </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={5}>
                 <Box>
                     <Typography variant="h5" component="div">
                         Informações adicionais
@@ -74,7 +75,7 @@ function AssinarRelatorio() {
     return (
     <div className='backgroundAssinarRelatorio'>
         <Box display="flex" justifyContent="center" style={{ width: '100%' }}>
-            <Paper elevation={3} sx={{ p: 3 }} style={{ width: '90%' }}>
+            <Paper elevation={3} sx={{ p: 7 }} style={{ width: '70%' }}>
                 <Box display="flex" justifyContent="center" flexDirection="column">
                     <Typography variant="h4" component="h1" align="center">
                         Assinar Relatórios

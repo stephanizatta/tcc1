@@ -5,19 +5,46 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 30rem;
+    padding: 480px;
     background: url("../../../public/imagemfundo.png") no-repeat right top;
     background-size: cover;
 }
 
-@media screen and (min-width: 1640px) {
-    .backgroundLogin {
-      margin: 1em 2em;
+@media only screen and (max-device-width: 900px) {
+  .backgroundLogin {
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    padding: 480px;
     }
   }
 
-  @media screen and (max-width: 1076px) {
-    .backgroundLogin {
-      margin: 1em 2em;
-    }
+/* min-width */
+@media screen and (min-width: 900px) {
+	.backgroundLogin {
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    padding: 480px;
   }
+}
+
+/* min-width & max-width */
+@media screen and (min-width: 600px) and (max-width: 900px) {
+	.backgroundLogin {
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    padding: 480px;
+  }
+}
+
+/* max device width */
+@media screen and (max-device-width: 480px) {
+	.backgroundLogin {
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    padding: 480px;
+  }
+}
