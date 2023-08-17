@@ -10,6 +10,8 @@ function CadastroRelatorio() {
   const [isRedirecting, setIsRedirecting] = useState(false);
   const navigate = useNavigate ();
   const [emptyFields, setEmptyFields] = useState([]);
+  const session = JSON.parse(localStorage.getItem("user_session"));
+  const userType = session.data.user.userType;
 
   const handleAddMaterial = () => {
     setMateriaisList([...materiaisList, { referencia: '', quantidade: '', descricao: '', lote: '' }]);
@@ -28,9 +30,9 @@ function CadastroRelatorio() {
     updatedMateriaisList.splice(index, 1);
     setMateriaisList(updatedMateriaisList);
   };
-
+ 
   function handleBackHome() {
-    navigate('/home?isAdmin=true');
+      navigate('/home?is'+{userType}+'=true');
   }
 
   function handleOk() {

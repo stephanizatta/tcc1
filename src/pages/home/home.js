@@ -1,19 +1,16 @@
 import './home.css';
 import React from 'react';
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Home() {
-    const location = useLocation();
-    const isAdmin = new URLSearchParams(location.search).get('isAdmin') === 'true';
-    const isInstrumentador = new URLSearchParams(location.search).get('isInstrumentador') === 'true';
-    const isMedico = new URLSearchParams(location.search).get('isMedico') === 'true';
-    const isFinanceiro = new URLSearchParams(location.search).get('isFinanceiro') === 'true';
+    const session = JSON.parse(localStorage.getItem("user_session"));
+    const userType = session.data.user.userType;
 
     function handleLogout() {
         window.location.href = '/';
     }
-  
+
     return (
         <div className='backgroundHome'>
             <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
@@ -27,7 +24,7 @@ function Home() {
 
                         <br/>
 
-                        {isAdmin && (
+                        {userType === "admin" && (
                         <React.Fragment>
                             <Link to='/cadastro-relatorio' align='center'>
                                 <Button variant='text'>
@@ -79,7 +76,7 @@ function Home() {
                         </React.Fragment>
                         )}
 
-                        {isInstrumentador && (
+                        {userType === "instrumentador" && (
                         <React.Fragment>
                             <Link to='/cadastro-relatorio' align='center'>
                                 <Button variant='text'>
@@ -121,7 +118,7 @@ function Home() {
                         </React.Fragment>
                         )}
 
-                        {isMedico && (
+                        {userType === "medico" && (
                         <React.Fragment>
                             <Link to='/relatorios-assinados' align='center'>
                                 <Button variant='text'>
@@ -137,7 +134,7 @@ function Home() {
                         </React.Fragment>
                         )}
 
-                        {isFinanceiro && (
+                        {userType === "financeiro" && (
                         <React.Fragment>                            
                             <Link to='/cadastro-relatorio' align='center'>
                                 <Button variant='text'>

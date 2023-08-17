@@ -7,6 +7,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const session = JSON.parse(localStorage.getItem("user_session"));
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -16,21 +17,21 @@ function Login() {
     setPassword(event.target.value);
   }
 
-  function handleLogin() {
-    if (email === 'admin' && password === 'admin') {
-      window.location.href = '/home?isAdmin=true';
+  async function handleLogin() {
+    const login = await fetch('http://localhost:3001/pub/login', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({email, password}),
+    });
 
-    } else if (email === 'instrumentador' && password === 'instrumentador'){
-      window.location.href = '/home?isInstrumentador=true';
+    localStorage.setItem("user_session", JSON.stringify(await login.json()));
 
-    } else if  (email === 'medico' && password === 'medico') {
-      window.location.href = '/home?isMedico=true';
-
-    } else if (email === 'financeiro' && password === 'financeiro') {
-      window.location.href = '/home?isFinanceiro=true';
-      
-    } else {
+    if (session.success === false || session.email === "" || session.password === "") {
       setErrorMessage('Credenciais inválidas. Por favor, verifique seu e-mail e senha.');
+    } else {
+      window.location.href = '/home';
     }
   }
 
@@ -45,7 +46,7 @@ function Login() {
 
             <TextField
               required
-              id="outlined-required"
+              id="outlined-email"
               label="E-mail"
               placeholder="Digite seu e-mail"
               value={email}

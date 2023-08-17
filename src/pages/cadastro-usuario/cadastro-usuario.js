@@ -9,32 +9,23 @@ import { useNavigate } from 'react-router-dom';
 
 function CadastroUsuario() {
     const [userType, setUserType] = React.useState('');
-    const [isUsuarioCadastrado, setIsUsuarioCadastrado] = useState(false);
-    const [isRedirecting, setIsRedirecting] = useState(false);
+    const isUsuarioCadastrado = useState(false);
+    const isRedirecting = useState(false);
     const navigate = useNavigate ();
+    const session = JSON.parse(localStorage.getItem("user_session"));
+    const userSession = session.data.user.userType;
 
     const handleChange = (event) => {
         setUserType(event.target.value);
     };
-
+   
     function handleBackHome() {
-        navigate('/home?isAdmin=true');
-    }
-
-    function handleOk() {
-        setIsUsuarioCadastrado(true);
-        setIsRedirecting(true);
-    
-        setTimeout(() => {
-            window.location.href = '/home?isAdmin=true';
-        }, 3000);
+        navigate('/home?is'+{userSession}+'=true');
     }
 
     function onSubmit(event){
         event.preventDefault();
         const data = new FormData(event.target);
-
-        console.log(data.get('email')); // Reference by form input's `name` tag
     
         var object = {};
         data.forEach((value, key) => object[key] = value);
@@ -76,18 +67,23 @@ function CadastroUsuario() {
                                     value={userType}
                                     label="Tipo de usuário"
                                     onChange={handleChange}
-                                    name='type'
+                                    name='userType'
                                     >
-                                    <MenuItem value={10}>Administrador</MenuItem>
-                                    <MenuItem value={20}>Financeiro</MenuItem>
-                                    <MenuItem value={30}>Instrumentador</MenuItem>
-                                    <MenuItem value={40}>Médico</MenuItem>
+                                    <MenuItem value="admin">Administrador</MenuItem>
+                                    <MenuItem value="financeiro">Financeiro</MenuItem>
+                                    <MenuItem value="instrumentador">Instrumentador</MenuItem>
+                                    <MenuItem value="medico">Médico</MenuItem>
                                 </Select>
                             </FormControl>
                             <TextField
-                                required
                                 style={{marginTop: '1rem' }}
                                 label="Assinatura"
+                            />
+                            <TextField
+                                style={{marginTop: '1rem' }}
+                                label="CRM"
+                                type="crm"
+                                name='crm'
                             />
                             <TextField
                                 required
@@ -118,7 +114,6 @@ function CadastroUsuario() {
                                             color='primary'
                                             variant='contained'
                                             style={{ width: '7rem', marginRight: '1rem' }}
-                                            //onClick={handleOk}
                                             type='submit'
                                             >
                                             Ok

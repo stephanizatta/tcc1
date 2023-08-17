@@ -65,8 +65,11 @@ const card = (
 function AssinarRelatorio() {
     const navigate = useNavigate ();
 
+    const session = JSON.parse(localStorage.getItem("user_session"));
+    const userType = session.data.user.userType;
+
     function handleBackHome() {
-        navigate('/home?isMedico=true');
+        navigate('/home?is'+{userType}+'=true');
     }
 
     return (

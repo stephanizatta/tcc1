@@ -9,9 +9,11 @@ import { useNavigate } from 'react-router-dom';
 
 function MedicosCadastrados() {
     const navigate = useNavigate();
+    const session = JSON.parse(localStorage.getItem("user_session"));
+    const userType = session.data.user.userType;
 
     function handleBackHome() {
-        navigate('/home?isInstrumentador=true');
+        navigate('/home?is'+{userType}+'=true');
     }
 
     return (
