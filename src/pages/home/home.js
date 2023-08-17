@@ -1,7 +1,7 @@
 import './home.css';
 import React from 'react';
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const session = JSON.parse(localStorage.getItem("user_session"));
