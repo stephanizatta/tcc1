@@ -18,7 +18,7 @@ function MateriaisCadastrados() {
     return (
         <div className='backgroundMateriaisCadastrados'>
         <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
-            <Paper elevation={3} sx={{ p: 3 }} style={{ width: '90%' }}>
+            <Paper elevation={3} sx={{ p: 3 }} style={{ width: '80%' }}>
                     <Box display='flex' justifyContent='center' flexDirection='column'>
                         <Typography variant='h4' component='h1' align='center'>
                             Materiais Cadastrados

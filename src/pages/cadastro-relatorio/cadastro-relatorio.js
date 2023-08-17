@@ -76,7 +76,7 @@ function CadastroRelatorio() {
   return (
     <div className='backgroundCadastroRelatorio'>
       <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
-        <Paper elevation={3} sx={{ p: 3 }} style={{ width: '90%' }}>
+        <Paper elevation={3} sx={{ p: 5 }} style={{ width: '70%' }}>
           <Box display='flex' justifyContent='center' flexDirection='column'>
             <Typography variant="h4" component="h1" align="center">
               Cadastro de Relatório
@@ -92,28 +92,15 @@ function CadastroRelatorio() {
             {materiaisList.map((materiais, index) => (
               <div key={index}>
                 {index > 0 && <Divider style={{ marginTop: '1rem', marginBottom: '1rem' }} />}
+                
                 <TextField
                   required
                   error={emptyFields.includes(index)}
                   helperText={emptyFields.includes(index) && 'Campo obrigatório'}
                   style={{
                     marginTop: '1rem',
-                    marginRight: '0.3rem',
-                    width: '14%',
-                    borderRadius: '4px'
-                  }}
-                  label="Quantidade"
-                  type="number"
-                  value={materiais.quantidade}
-                  onChange={(e) => handleMaterialChange(index, 'quantidade', e.target.value)}
-                />
-                <TextField
-                  required
-                  error={emptyFields.includes(index)}
-                  helperText={emptyFields.includes(index) && 'Campo obrigatório'}
-                  style={{
-                    marginTop: '1rem',
-                    width: '85%',
+                    marginRight: '7rem',
+                    width: '100%',
                     borderRadius: '4px'
                   }}
                   label="Descrição"
@@ -128,7 +115,22 @@ function CadastroRelatorio() {
                   style={{
                     marginTop: '1rem',
                     marginRight: '0.3rem',
-                    width: '27%',
+                    width: '33%',
+                    borderRadius: '4px'
+                  }}
+                  label="Quantidade"
+                  type="number"
+                  value={materiais.quantidade}
+                  onChange={(e) => handleMaterialChange(index, 'quantidade', e.target.value)}
+                />
+                <TextField
+                  required
+                  error={emptyFields.includes(index)}
+                  helperText={emptyFields.includes(index) && 'Campo obrigatório'}
+                  style={{
+                    marginTop: '1rem',
+                    marginRight: '0.3rem',
+                    width: '33%',
                     borderRadius: '4px'
                   }}
                   label="Referência"
@@ -142,7 +144,7 @@ function CadastroRelatorio() {
                   helperText={emptyFields.includes(index) && 'Campo obrigatório'}
                   style={{
                     marginTop: '1rem',
-                    width: '30%',
+                    width: '25%',
                     borderRadius: '4px'
                   }}
                   label="Lote"
@@ -180,27 +182,39 @@ function CadastroRelatorio() {
 
             <div>
               <TextField
-                style={{ marginTop: '1rem', marginRight: '0.3rem', width: '50%' }}
+                style={{ marginTop: '1rem', width: '100%' }}
                 label="Hospital"
                 type="text"
               />
               <TextField
-                style={{ marginTop: '1rem', marginRight: '0.3rem', width: '30%' }}
-                label="Médico"
-                type="text"
-              />
-               <TextField
-                style={{ marginTop: '1rem', width: '19%' }}
-                label="CRM"
-                type="text"
-              />
-              <TextField
-                style={{ marginTop: '1rem', marginRight: '0.4rem', width: '50%' }}
+                style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
                 label="Paciente"
                 type="text"
               />
               <TextField
-                style={{ marginTop: '1rem', marginRight: '0.4rem', width: '24.5%' }}
+                style={{ marginTop: '1rem', width: '40%' }}
+                label="Convênio"
+                type="text"
+              />
+              <TextField
+                style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
+                label="Médico"
+                type="text"
+              />
+               <TextField
+                style={{ marginTop: '1rem', width: '40%' }}
+                label="CRM"
+                type="text"
+              />
+
+              <TextField
+                style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
+                label="Instrumentador"
+                type="text"
+              />
+              
+              <TextField
+                style={{ marginTop: '1rem', marginRight: '0.2rem', width: '20%' }}
                 label="Data"
                 type="date"
                 InputLabelProps={{
@@ -208,27 +222,19 @@ function CadastroRelatorio() {
                 }}
               />
               <TextField
-                style={{ marginTop: '1rem', width: '24.3%' }}
+                style={{ marginTop: '1rem', width: '20%' }}
                 label="Hora"
                 type="time"
                 InputLabelProps={{
                   shrink: true
                 }}
               />
-              <TextField
-                style={{ marginTop: '1rem', marginRight: '0.5rem', width: '50%' }}
-                label="Instrumentador"
-                type="text"
-              />
-              <TextField
-                style={{ marginTop: '1rem', width: '49%' }}
-                label="Convênio"
-                type="text"
-              />
+              
+              
             </div>
           </Box>
 
-          <Box style={{ marginTop: '1rem' }}>
+          <Box style={{ marginTop: '3rem' }}>
             {isRelatorioCadastrado && isRedirecting ? (
               <Box display="flex" alignItems="center">
                 <Alert severity="success" style={{ marginRight: '1rem' }}>
@@ -241,7 +247,7 @@ function CadastroRelatorio() {
                 <Button
                   color='primary'
                   variant='contained'
-                  style={{ width: '7rem', marginRight: '1rem' }}
+                  style={{ width: '7rem', marginRight: '3rem' }}
                   onClick={handleOk}
                 >
                   Ok
