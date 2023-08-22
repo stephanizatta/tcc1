@@ -9,8 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 function CadastroUsuario() {
     const [userType, setUserType] = React.useState('');
-    const isUsuarioCadastrado = useState(false);
-    const isRedirecting = useState(false);
     const navigate = useNavigate ();
     const session = JSON.parse(localStorage.getItem("user_session"));
     const userSession = session.data.user.userType;
@@ -25,10 +23,12 @@ function CadastroUsuario() {
 
     function onSubmit(event){
         event.preventDefault();
+
         const data = new FormData(event.target);
-    
         var object = {};
+        
         data.forEach((value, key) => object[key] = value);
+
         fetch('http://localhost:3001/pub/register', {
           method: 'POST',
           headers: {
@@ -100,34 +100,23 @@ function CadastroUsuario() {
                                 name='confirmPassword'
                             />
 
-                            <Box style={{ marginTop: '1rem' }}>
-                                {isUsuarioCadastrado && isRedirecting ? (
-                                    <Box display="flex" alignItems="center">
-                                        <Alert severity="success" style={{ marginRight: '1rem' }}>
-                                            <AlertTitle>Usuário cadastrado com sucesso!</AlertTitle>
-                                        </Alert>
-                                        <CircularProgress color="primary" size={24} />
-                                    </Box>
-                                ) : (
-                                    <>
-                                        <Button
-                                            color='primary'
-                                            variant='contained'
-                                            style={{ width: '7rem', marginRight: '1rem' }}
-                                            type='submit'
-                                            >
-                                            Ok
-                                        </Button>
-                                        <Button
-                                            color='primary'
-                                            variant='contained'
-                                            style={{ width: '7rem' }}
-                                            onClick={handleBackHome}
-                                            >
-                                            Voltar
-                                        </Button>
-                                    </>
-                                )}
+                            <Box style={{ marginTop: '1rem' }}>                                                            
+                                <Button
+                                    color='primary'
+                                    variant='contained'
+                                    style={{ width: '7rem', marginRight: '1rem' }}
+                                    type='submit'
+                                    >
+                                    Ok
+                                </Button>
+                                <Button
+                                    color='primary'
+                                    variant='contained'
+                                    style={{ width: '7rem' }}
+                                    onClick={handleBackHome}
+                                    >
+                                    Voltar
+                                </Button>
                             </Box>
                         </Box>
                     </Paper>
