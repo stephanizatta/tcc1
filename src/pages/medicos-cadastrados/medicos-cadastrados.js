@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 function MedicosCadastrados() {
     const navigate = useNavigate();
     const session = JSON.parse(localStorage.getItem("user_session"));
-    const userType = session.data.user.userType;
+    const userType = session.data.usuario.tipoDeUsuario;
 
     function handleBackHome() {
         navigate('/home?is'+{userType}+'=true');

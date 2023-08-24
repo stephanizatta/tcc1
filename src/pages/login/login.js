@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [senha, setSenha] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const session = JSON.parse(localStorage.getItem("user_session"));
 
@@ -14,7 +14,7 @@ function Login() {
   }
   
   function handlePasswordChange(event) {
-    setPassword(event.target.value);
+    setSenha(event.target.value);
   }
 
   async function handleLogin() {
@@ -23,12 +23,12 @@ function Login() {
       headers: {
         'content-type': 'application/json'
       },
-      body: JSON.stringify({email, password}),
+      body: JSON.stringify({email, senha}),
     });
 
     localStorage.setItem("user_session", JSON.stringify(await login.json()));
 
-    if (session.success === false || session.email === "" || session.password === "") {
+    if (session.success === false || session.email === "" || session.senha === "") {
       setErrorMessage('Credenciais inválidas. Por favor, verifique seu e-mail e senha.');
     } else {
       window.location.href = '/home';
@@ -46,6 +46,7 @@ function Login() {
 
             <TextField
               required
+              name="email"
               id="outlined-email"
               label="E-mail"
               placeholder="Digite seu e-mail"
@@ -57,10 +58,11 @@ function Login() {
 
             <TextField
               required
+              name="senha"
               id="outlined-password-input"
               label="Senha"
               type="password"
-              value={password}
+              value={senha}
               onChange={handlePasswordChange}
             />
 

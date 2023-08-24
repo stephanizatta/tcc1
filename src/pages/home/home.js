@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Home() {
     const session = JSON.parse(localStorage.getItem("user_session"));
-    const userType = session.data.user.userType;
+    const userType = session.data.usuario.tipoDeUsuario;
 
     function handleLogout() {
         window.location.href = '/';

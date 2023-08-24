@@ -1,22 +1,28 @@
 import './cadastro-usuario.css';
-import { Box, Button, Paper, TextField, Typography, Alert, AlertTitle, CircularProgress } from '@mui/material';
+import { Box, Button, LinearProgress, Paper, TextField, Typography } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 function CadastroUsuario() {
     const [userType, setUserType] = React.useState('');
     const navigate = useNavigate ();
     const session = JSON.parse(localStorage.getItem("user_session"));
-    const userSession = session.data.user.userType;
+    const userSession = session.data.usuario.tipoDeUsuario;
+    const [successMessage, setSuccessMessage] = useState(false);
+    const [showAdditionalFields, setShowAdditionalFields] = useState(false);
+    const [passwordsMatch, setPasswordsMatch] = useState(true);
 
     const handleChange = (event) => {
         setUserType(event.target.value);
+        setShowAdditionalFields(event.target.value === "medico");
     };
-   
+
     function handleBackHome() {
         navigate('/home?is'+{userSession}+'=true');
     }
@@ -25,16 +31,25 @@ function CadastroUsuario() {
         event.preventDefault();
 
         const data = new FormData(event.target);
-        var object = {};
-        
+        var object = {};        
+
         data.forEach((value, key) => object[key] = value);
 
-        fetch('http://localhost:3001/pub/register', {
+        if (object.senha !== object.repitaSenha) {
+            setPasswordsMatch(false);
+            return;
+        }
+
+        fetch('http://localhost:3001/pub/cadastrarUsuario', {
           method: 'POST',
           headers: {
             'content-type': 'application/json'
           },
           body: JSON.stringify(object),
+        }).then(() => {
+            setPasswordsMatch(true);
+            setSuccessMessage(true); 
+            setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000); 
         });
     }
 
@@ -50,7 +65,7 @@ function CadastroUsuario() {
                                 required
                                 style={{marginTop: '1rem'}}
                                 label="Nome completo"
-                                name='firstName'
+                                name='nome'
                             />
                             <TextField
                                 required
@@ -67,7 +82,7 @@ function CadastroUsuario() {
                                     value={userType}
                                     label="Tipo de usuário"
                                     onChange={handleChange}
-                                    name='userType'
+                                    name='tipoDeUsuario'
                                     >
                                     <MenuItem value="admin">Administrador</MenuItem>
                                     <MenuItem value="financeiro">Financeiro</MenuItem>
@@ -75,31 +90,45 @@ function CadastroUsuario() {
                                     <MenuItem value="medico">Médico</MenuItem>
                                 </Select>
                             </FormControl>
-                            <TextField
-                                style={{marginTop: '1rem' }}
-                                label="Assinatura"
-                            />
-                            <TextField
-                                style={{marginTop: '1rem' }}
-                                label="CRM"
-                                type="crm"
-                                name='crm'
-                            />
+                            {showAdditionalFields && (
+                                <>
+                                    <TextField
+                                        required
+                                        name="assinaturaMedico"
+                                        style={{marginTop: '1rem' }}
+                                        label="Assinatura"
+                                    />
+                                    <TextField
+                                        required
+                                        style={{marginTop: '1rem' }}
+                                        label="CRM"
+                                        type="text"
+                                        name='medicoCrm'
+                                    />
+                                </>
+                            )}
                             <TextField
                                 required
                                 style={{marginTop: '1rem' }}
                                 label="Senha"
                                 type="password"
-                                name='password'
+                                name='senha'
                             />
                             <TextField
                                 required
                                 style={{marginTop: '1rem' }}
                                 label="Repita a senha"
                                 type="password"
-                                name='confirmPassword'
+                                name='repitaSenha'
                             />
-
+                            {!passwordsMatch && (
+                                <Box mt={2} width='100%'>
+                                    <Alert severity="error">
+                                        <AlertTitle>Senhas não coincidem</AlertTitle>
+                                    </Alert>
+                                </Box>
+                            )}
+                            
                             <Box style={{ marginTop: '1rem' }}>                                                            
                                 <Button
                                     color='primary'
@@ -118,6 +147,14 @@ function CadastroUsuario() {
                                     Voltar
                                 </Button>
                             </Box>
+                            {successMessage && (
+                                <Box mt={2} width='100%'>
+                                    <Alert severity="success">
+                                        <AlertTitle>Usuário cadastrado com sucesso! </AlertTitle>
+                                        <LinearProgress color="success" size={24} />                                        
+                                    </Alert>
+                                </Box>
+                            )}
                         </Box>
                     </Paper>
                 </Box>

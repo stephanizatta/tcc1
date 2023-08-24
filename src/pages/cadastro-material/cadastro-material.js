@@ -1,14 +1,16 @@
 import './cadastro-material.css';
 import React, { useState } from 'react';
-import { Box, Button, Paper, TextField, Typography, Alert, AlertTitle, CircularProgress } from '@mui/material';
+import { Box, Button, Paper, TextField, Typography, Alert, AlertTitle, LinearProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 
 function CadastroMaterial() {
-    const [isMaterialCadastrado, setIsMaterialCadastrado] = useState(false);
-    const [isRedirecting, setIsRedirecting] = useState(false);
     const navigate = useNavigate ();
     const [descriptions, setDescriptions] = useState(['']);
+    const [successMessage, setSuccessMessage] = useState(false);
+    const session = JSON.parse(localStorage.getItem("user_session"));
+    const userType = session.data.usuario.tipoDeUsuario;
+    const userSession = session.data.usuario.tipoDeUsuario;
 
     const handleAddDescription = () => {
         setDescriptions([...descriptions, '']);
@@ -28,91 +30,103 @@ function CadastroMaterial() {
         setDescriptions(updatedDescriptions);
     };
 
-    function handleOk() {  
-        setIsMaterialCadastrado(true);
-        setIsRedirecting(true);
-
-        setTimeout(() => {
-            window.location.href = '/home?isAdmin=true';
-        }, 3000);
-    }
-
     function handleBackHome() {
-        navigate('/home?isAdmin=true');
+        navigate('/home?is'+{userType}+'=true');
     }
 
-  return (
-    <div className='backgroundCadastroMateriais'>
-        <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
-            <Paper elevation={3} sx={{ p: 3 }} style={{ width: '30rem' }}>
-                <Box display='flex' justifyContent='center' flexDirection='column'>
-                        <Typography variant='h4' component='h1' align='center'>
-                            Cadastro de Material
-                        </Typography>
+    function onSubmit(event){
+        event.preventDefault();
 
-                    <br />
+        const data = new FormData(event.target);
+    
+        var object = {};
+        data.forEach((value, key) => object[key] = value);
+        
+        fetch('http://localhost:3001/pub/cadastrarMaterial', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(object),
+        }).then(() => {
+            setSuccessMessage(true);
+            setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000); 
+        });
+    }
 
-                    {descriptions.map((description, index) => (
-                        <Box key={index} display='flex' alignItems='center'>
-                            <TextField
-                                style={{ marginTop: '1rem', width: '100%' }}
-                                label='Descrição'
-                                type='text'
-                                value={description}
-                                onChange={(e) => handleDescriptionChange(index, e.target.value)}
-                            />
-                            {index > 0 && (
+    return (
+        <div className='backgroundCadastroMateriais'>´
+            <form onSubmit={onSubmit}>
+                <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
+                    <Paper elevation={3} sx={{ p: 3 }} style={{ width: '30rem' }}>
+                        <Box display='flex' justifyContent='center' flexDirection='column'>
+                            <Typography variant='h4' component='h1' align='center'>
+                                Cadastro de Material
+                            </Typography>
+
+                            <br />
+
+                            {descriptions.map((description, index) => (
+                                <Box key={index} display='flex' alignItems='center'>
+                                    <TextField
+                                        style={{ marginTop: '1rem', width: '100%' }}
+                                        label='Descrição'
+                                        type='text'
+                                        value={description}
+                                        name='descricao'
+                                        onChange={(e) => handleDescriptionChange(index, e.target.value)}
+                                    />
+                                    {index > 0 && (
+                                        <Button
+                                            variant='text'
+                                            color='error'
+                                            onClick={() => handleDeleteDescription(index)}
+                                            style={{ marginLeft: '0.5rem', marginTop: '1rem' }}
+                                            startIcon={<DeleteIcon />}
+                                            >
+                                            Excluir
+                                        </Button>
+                                    )}
+                                </Box>
+                            ))}
+
+                            <Button variant='text' onClick={handleAddDescription}>
+                                Adicionar mais +
+                            </Button>
+
+                            <Box style={{ marginTop: '1rem' }}>
+                                
                                 <Button
-                                    variant='text'
-                                    color='error'
-                                    onClick={() => handleDeleteDescription(index)}
-                                    style={{ marginLeft: '0.5rem', marginTop: '1rem' }}
-                                    startIcon={<DeleteIcon />}
+                                    color='primary'
+                                    variant='contained'
+                                    style={{ width: '7rem', marginRight: '1rem' }}
+                                    type='submit'
                                     >
-                                    Excluir
+                                    Ok
                                 </Button>
-                            )}
+                                <Button
+                                    color='primary'
+                                    variant='contained'
+                                    style={{ width: '7rem' }}
+                                    onClick={handleBackHome}
+                                    >
+                                    Voltar
+                                </Button>
+                                {successMessage && (
+                                    <Box mt={2} width='100%'>
+                                        <Alert severity="success">
+                                            <AlertTitle>Material cadastrado com sucesso! </AlertTitle>
+                                            <LinearProgress color="success" size={24} />                                        
+                                        </Alert>
+                                    </Box>
+                                )}
+                            </Box>
                         </Box>
-                    ))}
-
-                <Button variant='text' onClick={handleAddDescription}>
-                    Adicionar mais +
-                </Button>
-
-                <Box style={{ marginTop: '1rem' }}>
-                    {isMaterialCadastrado && isRedirecting ? (
-                        <Box display="flex" alignItems="center">
-                            <Alert severity="success" style={{ marginRight: '1rem' }}>
-                                <AlertTitle>Salvo com sucesso!</AlertTitle>
-                            </Alert>
-                            <CircularProgress color="primary" size={24} />
-                        </Box>
-                        ) : (
-                        <>
-                            <Button
-                                color='primary'
-                                variant='contained'
-                                style={{ width: '7rem', marginRight: '1rem' }}
-                                onClick={handleOk}
-                                >
-                                Ok
-                            </Button>
-                            <Button
-                                color='primary'
-                                variant='contained'
-                                style={{ width: '7rem' }}
-                                onClick={handleBackHome}
-                                >
-                                Voltar
-                            </Button>
-                        </>
-                    )}
-                    </Box>
-            </Box>
-        </Paper>
-    </Box>
-    </div>
-  );
+                    </Paper>
+                </Box>
+            </form>
+        </div>
+    );
 }
 
 export default CadastroMaterial;

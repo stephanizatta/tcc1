@@ -7,7 +7,7 @@ function CadastroMedicos() {
     const [isRedirecting, setIsRedirecting] = useState(false);
     const navigate = useNavigate ();    
     const session = JSON.parse(localStorage.getItem("user_session"));
-    const userType = session.data.user.userType;
+    const userType = session.data.usuario.tipoDeUsuario;
 
     function handleBackHome() {
         navigate('/home?is'+{userType}+'=true');
@@ -32,29 +32,34 @@ function CadastroMedicos() {
                             required
                             style={{marginTop: '1rem'}}
                             label="Nome completo"
+                            name="nome"
                         />
                         <TextField
                             required
                             style={{marginTop: '1rem'}}
                             label="E-mail"
+                            name="email"
                         />
                         
                         <TextField
                             required
                             style={{marginTop: '1rem' }}
                             label="Assinatura"
+                            name="assinaturaMedico"
                         />
                         <TextField
                             required
                             style={{marginTop: '1rem' }}
                             label="Senha"
                             type="password"
+                            name="senha"
                         />
                         <TextField
                             required
                             style={{marginTop: '1rem' }}
                             label="Repita a senha"
                             type="password"
+                            name="repita-senha"
                         />
 
                         <Box style={{ marginTop: '1rem' }}>
