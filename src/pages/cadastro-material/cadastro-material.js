@@ -66,11 +66,10 @@ function CadastroMaterial() {
                 body: JSON.stringify(object),
             }).then(() => {
                 setSuccessMessage(true); 
-                setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000); 
+                setTimeout(() => navigate('/materiais-cadastrados'), 3000); 
             });
         }
-    }
-    
+    }    
 
     useEffect(() => {
         if (params.id) {

@@ -6,17 +6,39 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 function MateriaisCadastrados() {
     const navigate = useNavigate();
     const session = JSON.parse(localStorage.getItem("user_session"));
     const userType = session.data.usuario.tipoDeUsuario;
     const [materiais, setMateriais] = useState([]);
+    const params = useParams();
 
    function handleBackHome() {
        navigate('/home?is'+{userType}+'=true');
    }
+
+    function deleteMaterial(materialId) {
+        fetch(`http://localhost:3001/pub/excluirMaterial/${materialId}`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({}), 
+        
+        }).then(() => {
+            fetch('http://localhost:3001/pub/visualizarMateriais', {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json'
+                },
+            }).then((resposta) => resposta.json())
+              .then((retorno) => {
+                  setMateriais(retorno.data.materiais);
+              });
+        });
+    }
 
     useEffect(() => {
         fetch('http://localhost:3001/pub/visualizarMateriais', {
@@ -53,13 +75,17 @@ function MateriaisCadastrados() {
                                         <Card variant='outlined'>
                                             <CardContent>
                                                 <Box display='flex' alignItems='center'>
-                                                <Typography>{ material.descricao }</Typography>
+                                                    <Typography>{material.descricao}</Typography>
                                                     <Box ml='auto'>
                                                         <CardActions>
                                                             <Link to={"/cadastro-material/" + material.id}>
                                                                 <Button startIcon={<EditIcon />} />
                                                             </Link>
-                                                            <Button color='error' startIcon={<DeleteIcon />} />
+                                                            <Button 
+                                                                color='error' 
+                                                                startIcon={<DeleteIcon />} 
+                                                                onClick={() => deleteMaterial(material.id)}
+                                                            />
                                                         </CardActions>
                                                     </Box>
                                                 </Box>
