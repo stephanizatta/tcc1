@@ -6,14 +6,13 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function MateriaisCadastrados() {
     const navigate = useNavigate();
     const session = JSON.parse(localStorage.getItem("user_session"));
     const userType = session.data.usuario.tipoDeUsuario;
     const [materiais, setMateriais] = useState([]);
-    const params = useParams();
 
    function handleBackHome() {
        navigate('/home?is'+{userType}+'=true');

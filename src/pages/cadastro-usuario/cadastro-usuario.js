@@ -4,19 +4,21 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
 function CadastroUsuario() {
-    const [userType, setUserType] = React.useState('');
+    const [userType, setUserType] = useState('');
     const navigate = useNavigate ();
     const session = JSON.parse(localStorage.getItem("user_session"));
     const userSession = session.data.usuario.tipoDeUsuario;
     const [successMessage, setSuccessMessage] = useState(false);
     const [showAdditionalFields, setShowAdditionalFields] = useState(false);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
+    const params = useParams();
+    const [usuarios, setUsuarios] = useState(['']);
 
     const handleChange = (event) => {
         setUserType(event.target.value);
@@ -24,15 +26,18 @@ function CadastroUsuario() {
     };
 
     function handleBackHome() {
-        navigate('/home?is'+{userSession}+'=true');
+        if (params.id) {
+            navigate('/usuarios-cadastrados');
+        } else {
+            navigate('/home?is'+{userType}+'=true');
+        }
     }
 
     function onSubmit(event){
         event.preventDefault();
 
         const data = new FormData(event.target);
-        var object = {};        
-
+        var object = {};
         data.forEach((value, key) => object[key] = value);
 
         if (object.senha !== object.repitaSenha) {
@@ -40,18 +45,49 @@ function CadastroUsuario() {
             return;
         }
 
-        fetch('http://localhost:3001/pub/cadastrarUsuario', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify(object),
-        }).then(() => {
-            setPasswordsMatch(true);
-            setSuccessMessage(true); 
-            setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000); 
-        });
+        if (!params.id) {
+            fetch('http://localhost:3001/pub/cadastrarUsuario', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(object),
+            }).then(() => {
+                setSuccessMessage(true);
+                setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000);
+            });
+        } else {
+            fetch(`http://localhost:3001/pub/editarUsuario/${params.id}`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(object),
+            }).then(() => {
+                setSuccessMessage(true); 
+                setTimeout(() => navigate('/usuarios-cadastrados'), 3000); 
+            });
+        }
     }
+
+    useEffect(() => {
+        if (params.id) {
+            fetch(`http://localhost:3001/pub/visualizarUsuarios?id=${params.id}`, {
+                method: 'GET',
+                headers: {
+                'content-type': 'application/json'
+                },
+            }).then(
+                (resposta) => {
+                    return resposta.json()
+                }
+            ).then(
+                (retorno) => {
+                    setUsuarios([retorno.data.usuarios[0].nome]);
+                }
+            )
+        }
+    }, [params.id])
 
     return (
         <div className='backgroundCadastro'>
@@ -60,12 +96,16 @@ function CadastroUsuario() {
                     <Paper elevation={3} sx={{ p: 3 }} style={{ width: '32rem' }}>
                         <Box component="h1" align="center" display='flex' justifyContent='center' flexDirection='column'>
 
-                            <Typography variant="h4" component="h1" align="center"> Cadastro de Usuário </Typography>
+                            <Typography variant="h4" component="h1" align="center"> 
+                                Cadastro de Usuário 
+                            </Typography>
+
                             <TextField
                                 required
                                 style={{marginTop: '1rem'}}
                                 label="Nome completo"
                                 name='nome'
+                                value={usuarios.nome}                                  
                             />
                             <TextField
                                 required
@@ -78,12 +118,12 @@ function CadastroUsuario() {
                                 >
                                 <InputLabel id="demo-simple-select-label">Tipo de usuário</InputLabel>
                                 <Select
-                                    required
-                                    value={userType}
-                                    label="Tipo de usuário"
-                                    onChange={handleChange}
-                                    name='tipoDeUsuario'
-                                    >
+                                required
+                                value={userType}
+                                label="Tipo de usuário"
+                                onChange={handleChange}
+                                name='tipoDeUsuario'
+                                >
                                     <MenuItem value="admin">Administrador</MenuItem>
                                     <MenuItem value="financeiro">Financeiro</MenuItem>
                                     <MenuItem value="instrumentador">Instrumentador</MenuItem>
@@ -150,7 +190,7 @@ function CadastroUsuario() {
                             {successMessage && (
                                 <Box mt={2} width='100%'>
                                     <Alert severity="success">
-                                        <AlertTitle>Usuário cadastrado com sucesso! </AlertTitle>
+                                        <AlertTitle> Salvo com sucesso! </AlertTitle>
                                         <LinearProgress color="success" size={24} />                                        
                                     </Alert>
                                 </Box>

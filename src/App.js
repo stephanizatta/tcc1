@@ -32,6 +32,10 @@ const router = createBrowserRouter([
     element: <CadastroRelatorio />,
   },
   {
+    path: "/cadastro-relatorio/:id",
+    element: <CadastroRelatorio />,
+  },
+  {
     path: "/cadastro-material",
     element: <CadastroMaterial />,
   },
@@ -41,6 +45,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/cadastro-usuario",
+    element: <CadastroUsuario />,
+  },
+  {
+    path: "/cadastro-usuario/:id",
     element: <CadastroUsuario />,
   },
   {
