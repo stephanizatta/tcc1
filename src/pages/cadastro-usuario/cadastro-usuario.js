@@ -18,7 +18,10 @@ function CadastroUsuario() {
     const [showAdditionalFields, setShowAdditionalFields] = useState(false);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
     const params = useParams();
-    const [usuarios, setUsuarios] = useState(['']);
+    const [nomes, setNomes] = useState(['']);
+    const [emails, setEmails] = useState(['']);
+    const [assinaturas, setAssinaturas] = useState(['']);
+    const [crms, setCrms] = useState(['']);
 
     const handleChange = (event) => {
         setUserType(event.target.value);
@@ -83,11 +86,14 @@ function CadastroUsuario() {
                 }
             ).then(
                 (retorno) => {
-                    setUsuarios([retorno.data.usuarios[0].nome]);
+                    setNomes([retorno.data.usuarios[0].nome]);
+                    setEmails([retorno.data.usuarios[0].email]);
+                    setAssinaturas([retorno.data.usuarios[0].assinaturaMedico]);
+                    setCrms([retorno.data.usuarios[0].medicoCrm]);
                 }
             )
         }
-    }, [params.id])
+    }, [])
 
     return (
         <div className='backgroundCadastro'>
@@ -100,29 +106,36 @@ function CadastroUsuario() {
                                 Cadastro de Usuário 
                             </Typography>
 
-                            <TextField
-                                required
-                                style={{marginTop: '1rem'}}
-                                label="Nome completo"
-                                name='nome'
-                                value={usuarios.nome}                                  
-                            />
-                            <TextField
-                                required
-                                style={{marginTop: '1rem'}}
-                                label="E-mail"
-                                name='email'
-                            />
+                            {nomes.map((nome) => (
+                                <TextField
+                                    required
+                                    style={{marginTop: '1rem'}}
+                                    label="Nome completo"
+                                    name='nome'
+                                    value={nome}                            
+                                />
+                            ))}
+
+                            {emails.map((email) => (
+                                <TextField
+                                    required
+                                    style={{marginTop: '1rem'}}
+                                    label="E-mail"
+                                    name='email'
+                                    value={email}                            
+                                />
+                            ))}
+                            
                             <FormControl
                                 style={{marginTop: '1rem'}}
                                 >
                                 <InputLabel id="demo-simple-select-label">Tipo de usuário</InputLabel>
                                 <Select
-                                required
-                                value={userType}
-                                label="Tipo de usuário"
-                                onChange={handleChange}
-                                name='tipoDeUsuario'
+                                    required
+                                    value={userType}
+                                    label="Tipo de usuário"
+                                    onChange={handleChange}
+                                    name='tipoDeUsuario'                         
                                 >
                                     <MenuItem value="admin">Administrador</MenuItem>
                                     <MenuItem value="financeiro">Financeiro</MenuItem>
@@ -130,23 +143,32 @@ function CadastroUsuario() {
                                     <MenuItem value="medico">Médico</MenuItem>
                                 </Select>
                             </FormControl>
+
                             {showAdditionalFields && (
                                 <>
-                                    <TextField
-                                        required
-                                        name="assinaturaMedico"
-                                        style={{marginTop: '1rem' }}
-                                        label="Assinatura"
-                                    />
-                                    <TextField
-                                        required
-                                        style={{marginTop: '1rem' }}
-                                        label="CRM"
-                                        type="text"
-                                        name='medicoCrm'
-                                    />
+                                    {assinaturas.map((assinatura) => (
+                                        <TextField
+                                            required
+                                            name="assinaturaMedico"
+                                            style={{marginTop: '1rem' }}
+                                            label="Assinatura"
+                                            value={assinatura}
+                                        />
+                                    ))}
+
+                                    {crms.map((cmr) => (
+                                        <TextField
+                                            required
+                                            style={{marginTop: '1rem' }}
+                                            label="CRM"
+                                            type="text"
+                                            name='medicoCrm'
+                                            value={cmr}
+                                        />
+                                    ))}
                                 </>
                             )}
+                            
                             <TextField
                                 required
                                 style={{marginTop: '1rem' }}
@@ -154,6 +176,7 @@ function CadastroUsuario() {
                                 type="password"
                                 name='senha'
                             />
+
                             <TextField
                                 required
                                 style={{marginTop: '1rem' }}
