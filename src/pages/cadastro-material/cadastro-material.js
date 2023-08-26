@@ -1,8 +1,8 @@
 import './cadastro-material.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Paper, TextField, Typography, Alert, AlertTitle, LinearProgress } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function CadastroMaterial() {
     const navigate = useNavigate ();
@@ -11,6 +11,7 @@ function CadastroMaterial() {
     const session = JSON.parse(localStorage.getItem("user_session"));
     const userType = session.data.usuario.tipoDeUsuario;
     const userSession = session.data.usuario.tipoDeUsuario;
+    const params = useParams();
 
     const handleAddDescription = () => {
         setDescriptions([...descriptions, '']);
@@ -31,7 +32,11 @@ function CadastroMaterial() {
     };
 
     function handleBackHome() {
-        navigate('/home?is'+{userType}+'=true');
+        if (params.id) {
+            navigate('/materiais-cadastrados');
+        } else {
+            navigate('/home?is'+{userType}+'=true');
+        }
     }
 
     function onSubmit(event){
@@ -42,17 +47,46 @@ function CadastroMaterial() {
         var object = {};
         data.forEach((value, key) => object[key] = value);
         
-        fetch('http://localhost:3001/pub/cadastrarMaterial', {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify(object),
-        }).then(() => {
-            setSuccessMessage(true);
-            setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000); 
-        });
+        if (!params.id) {
+            fetch('http://localhost:3001/pub/cadastrarMaterial', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(object),
+            }).then(() => {
+                setSuccessMessage(true);
+                setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000); 
+            });
+        } else {
+            fetch('http://localhost:3001/pub/editarMaterial', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(object, params.id),
+            })
+        }
     }
+
+    useEffect(() => {
+        if (params.id) {
+            fetch(`http://localhost:3001/pub/visualizarMateriais?id=${params.id}`, {
+                method: 'GET',
+                headers: {
+                'content-type': 'application/json'
+                },
+            }).then(
+                (resposta) => {
+                    return resposta.json()
+                }
+            ).then(
+                (retorno) => {
+                    setDescriptions([retorno.data.materiais[0].descricao]);
+                }
+            )
+        }
+    }, [params.id])
 
     return (
         <div className='backgroundCadastroMateriais'>´
@@ -90,9 +124,11 @@ function CadastroMaterial() {
                                 </Box>
                             ))}
 
-                            <Button variant='text' onClick={handleAddDescription}>
-                                Adicionar mais +
-                            </Button>
+                            {!params.id && (
+                                <Button variant='text' onClick={handleAddDescription}>
+                                    Adicionar mais +
+                                </Button>
+                            )}
 
                             <Box style={{ marginTop: '1rem' }}>
                                 
@@ -115,7 +151,7 @@ function CadastroMaterial() {
                                 {successMessage && (
                                     <Box mt={2} width='100%'>
                                         <Alert severity="success">
-                                            <AlertTitle>Material cadastrado com sucesso! </AlertTitle>
+                                            <AlertTitle> Salvo com sucesso! </AlertTitle>
                                             <LinearProgress color="success" size={24} />                                        
                                         </Alert>
                                     </Box>

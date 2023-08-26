@@ -36,6 +36,10 @@ const router = createBrowserRouter([
     element: <CadastroMaterial />,
   },
   {
+    path: "/cadastro-material/:id",
+    element: <CadastroMaterial />,
+  },
+  {
     path: "/cadastro-usuario",
     element: <CadastroUsuario />,
   },

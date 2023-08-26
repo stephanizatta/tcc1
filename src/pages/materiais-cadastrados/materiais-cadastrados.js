@@ -1,21 +1,39 @@
 import './materiais-cadastrados.css';
 import { Box, Button, Paper, Typography, Grid } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function MateriaisCadastrados() {
     const navigate = useNavigate();
-   const session = JSON.parse(localStorage.getItem("user_session"));
-   const userType = session.data.usuario.tipoDeUsuario;
+    const session = JSON.parse(localStorage.getItem("user_session"));
+    const userType = session.data.usuario.tipoDeUsuario;
+    const [materiais, setMateriais] = useState([]);
 
    function handleBackHome() {
        navigate('/home?is'+{userType}+'=true');
    }
+
+    useEffect(() => {
+        fetch('http://localhost:3001/pub/visualizarMateriais', {
+            method: 'GET',
+            headers: {
+            'content-type': 'application/json'
+            },
+        }).then(
+            (resposta) => {
+                return resposta.json()
+            }
+        ).then(
+            (retorno) => {
+                setMateriais(retorno.data.materiais);
+            }
+        )
+    }, [])
 
     return (
         <div className='backgroundMateriaisCadastrados'>
@@ -30,133 +48,25 @@ function MateriaisCadastrados() {
 
                         <Box>
                             <Grid container spacing={2}>
-                                <Grid item xs={4}>
-                                    <Card variant='outlined'>
-                                        <CardContent>
-                                            <Box display='flex' alignItems='center'>
-                                            <Typography>Serra titanium</Typography>
-                                                <Box ml='auto'>
-                                                    <CardActions>
-                                                        <Button startIcon={<EditIcon />} />
-                                                        <Button color='error' startIcon={<DeleteIcon />} />
-                                                    </CardActions>
+                                {materiais.map(material => (
+                                    <Grid item xs={4}>
+                                        <Card variant='outlined'>
+                                            <CardContent>
+                                                <Box display='flex' alignItems='center'>
+                                                <Typography>{ material.descricao }</Typography>
+                                                    <Box ml='auto'>
+                                                        <CardActions>
+                                                            <Link to={"/cadastro-material/" + material.id}>
+                                                                <Button startIcon={<EditIcon />} />
+                                                            </Link>
+                                                            <Button color='error' startIcon={<DeleteIcon />} />
+                                                        </CardActions>
+                                                    </Box>
                                                 </Box>
-                                            </Box>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-
-                                <Grid item xs={4}>
-                                    <Card variant='outlined'>
-                                        <CardContent>
-                                            <Box display='flex' alignItems='center'>
-                                                <Typography>Alicate modelo 8</Typography>
-                                                <Box ml='auto'>
-                                                    <CardActions>
-                                                        <Button startIcon={<EditIcon />} />
-                                                        <Button color='error' startIcon={<DeleteIcon />} />
-                                                    </CardActions>
-                                                </Box>
-                                            </Box>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-
-                                <Grid item xs={4}>
-                                    <Card variant='outlined'>
-                                        <CardContent>
-                                            <Box display='flex' alignItems='center'>
-                                                <Typography>Alicate modelo 1</Typography>
-                                                <Box ml='auto'>
-                                                    <CardActions>
-                                                        <Button startIcon={<EditIcon />} />
-                                                        <Button color='error' startIcon={<DeleteIcon />} />
-                                                    </CardActions>
-                                                </Box>
-                                            </Box>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-
-                                <Grid item xs={4}>
-                                    <Card variant='outlined'>
-                                        <CardContent>
-                                            <Box display='flex' alignItems='center'>
-                                                <Typography>Parafuso Cortical</Typography>
-                                                <Box ml='auto'>
-                                                    <CardActions>
-                                                        <Button startIcon={<EditIcon />} />
-                                                        <Button color='error' startIcon={<DeleteIcon />} />
-                                                    </CardActions>
-                                                </Box>
-                                            </Box>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-
-                                <Grid item xs={4}>
-                                    <Card variant='outlined'>
-                                        <CardContent>
-                                            <Box display='flex' alignItems='center'>
-                                                <Typography>Placa bloqueada</Typography>
-                                                <Box ml='auto'>
-                                                    <CardActions>
-                                                        <Button startIcon={<EditIcon />} />
-                                                        <Button color='error' startIcon={<DeleteIcon />} />
-                                                    </CardActions>
-                                                </Box>
-                                            </Box>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-
-                                <Grid item xs={4}>
-                                    <Card variant='outlined'>
-                                        <CardContent>
-                                            <Box display='flex' alignItems='center'>
-                                                <Typography>Placa em ponte</Typography>
-                                                <Box ml='auto'>
-                                                    <CardActions>
-                                                        <Button startIcon={<EditIcon />} />
-                                                        <Button color='error' startIcon={<DeleteIcon />} />
-                                                    </CardActions>
-                                                </Box>
-                                            </Box>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-
-                                <Grid item xs={4}>
-                                    <Card variant='outlined'>
-                                        <CardContent>
-                                            <Box display='flex' alignItems='center'>
-                                                <Typography>Haste flexível</Typography>
-                                                <Box ml='auto'>
-                                                    <CardActions>
-                                                        <Button startIcon={<EditIcon />} />
-                                                        <Button color='error' startIcon={<DeleteIcon />} />
-                                                    </CardActions>
-                                                </Box>
-                                            </Box>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-
-                                <Grid item xs={4}>
-                                    <Card variant='outlined'>
-                                        <CardContent>
-                                            <Box display='flex' alignItems='center'>
-                                                <Typography>Parafuso tipo 4</Typography>
-                                                <Box ml='auto'>
-                                                    <CardActions>
-                                                        <Button startIcon={<EditIcon />} />
-                                                        <Button color='error' startIcon={<DeleteIcon />} />
-                                                    </CardActions>
-                                                </Box>
-                                            </Box>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                ))}
                             </Grid>
                         </Box>
                     </Box>
