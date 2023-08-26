@@ -39,35 +39,38 @@ function CadastroMaterial() {
         }
     }
 
-    function onSubmit(event){
+    function onSubmit(event) {
         event.preventDefault();
-
-        const data = new FormData(event.target);
     
+        const data = new FormData(event.target);
         var object = {};
         data.forEach((value, key) => object[key] = value);
-        
+    
         if (!params.id) {
             fetch('http://localhost:3001/pub/cadastrarMaterial', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(object),
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(object),
             }).then(() => {
                 setSuccessMessage(true);
-                setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000); 
+                setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000);
             });
         } else {
-            fetch('http://localhost:3001/pub/editarMaterial', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify(object, params.id),
-            })
+            fetch(`http://localhost:3001/pub/editarMaterial/${params.id}`, {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(object),
+            }).then(() => {
+                setSuccessMessage(true); 
+                setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000); 
+            });
         }
     }
+    
 
     useEffect(() => {
         if (params.id) {
