@@ -57,7 +57,7 @@ function CadastroRelatorio() {
     <div className='backgroundCadastroRelatorio'>
       <form onSubmit={onSubmit}>
         <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
-          <Paper elevation={3} sx={{ p: 5 }} style={{ width: '70%' }}>
+          <Paper elevation={3} sx={{ p: 5 }} style={{ width: '75%' }}>
             <Box display='flex' justifyContent='center' flexDirection='column'>
               <Typography variant="h4" component="h1" align="center">
                 Cadastro de Relatório
@@ -142,7 +142,7 @@ function CadastroRelatorio() {
                       variant="text"
                       color="error"
                       onClick={() => handleRemoveMaterial(index)}
-                      style={{ position: 'absolute', marginTop: '2%', marginLeft: '1%' }}
+                      style={{ position: 'absolute', marginTop: '1.3%', marginLeft: '0%' }}
                       startIcon={<DeleteIcon />}
                     >
                       Excluir
@@ -213,7 +213,7 @@ function CadastroRelatorio() {
                 <TextField
                   required
                   name="data"
-                  style={{ marginTop: '1rem', marginRight: '0.2rem', width: '20%' }}
+                  style={{ marginTop: '1rem', marginRight: '0.2rem', width: '19.8%' }}
                   label="Data"
                   type="date"
                   InputLabelProps={{
@@ -223,7 +223,7 @@ function CadastroRelatorio() {
                 <TextField
                   required
                   name="hora"
-                  style={{ marginTop: '1rem', width: '20%' }}
+                  style={{ marginTop: '1rem', width: '19.8%' }}
                   label="Hora"
                   type="time"
                   InputLabelProps={{

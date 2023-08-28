@@ -52,7 +52,7 @@ function CadastroMaterial() {
                 headers: {
                     'content-type': 'application/json'
                 },
-                body: JSON.stringify(object),
+                body: JSON.stringify({descriptions}),
             }).then(() => {
                 setSuccessMessage(true);
                 setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000);
