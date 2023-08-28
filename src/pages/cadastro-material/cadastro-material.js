@@ -96,9 +96,17 @@ function CadastroMaterial() {
                 <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
                     <Paper elevation={3} sx={{ p: 3 }} style={{ width: '30rem' }}>
                         <Box display='flex' justifyContent='center' flexDirection='column'>
-                            <Typography variant='h4' component='h1' align='center'>
-                                Cadastro de Material
-                            </Typography>
+
+                            {!params.id && (
+                                <Typography variant='h4' component='h1' align='center'>
+                                    Cadastro de Material
+                                </Typography>
+                            )}
+                            {params.id && (
+                                <Typography variant='h4' component='h1' align='center'>
+                                    Edição de Material
+                                </Typography>
+                            )}
 
                             <br />
 

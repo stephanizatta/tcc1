@@ -10,29 +10,23 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
 function CadastroUsuario() {
-    const [userType, setUserType] = useState('');
     const navigate = useNavigate ();
     const session = JSON.parse(localStorage.getItem("user_session"));
     const userSession = session.data.usuario.tipoDeUsuario;
     const [successMessage, setSuccessMessage] = useState(false);
-    const [showAdditionalFields, setShowAdditionalFields] = useState(false);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
     const params = useParams();
-    const [nomes, setNomes] = useState(['']);
-    const [emails, setEmails] = useState(['']);
-    const [assinaturas, setAssinaturas] = useState(['']);
-    const [crms, setCrms] = useState(['']);
-
-    const handleChange = (event) => {
-        setUserType(event.target.value);
-        setShowAdditionalFields(event.target.value === "medico");
-    };
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [assinatura, setAssinatura] = useState('');
+    const [crm, setCrm] = useState('');
+    const [tipo, setTipo] = useState('');
 
     function handleBackHome() {
         if (params.id) {
             navigate('/usuarios-cadastrados');
         } else {
-            navigate('/home?is'+{userType}+'=true');
+            navigate('/home?is'+{userType: tipo}+'=true');
         }
     }
 
@@ -73,6 +67,12 @@ function CadastroUsuario() {
         }
     }
 
+    function updateInput(setState){        
+        return (ev) => {
+            setState(ev.target.value)
+        }
+    }
+
     useEffect(() => {
         if (params.id) {
             fetch(`http://localhost:3001/pub/visualizarUsuarios?id=${params.id}`, {
@@ -86,10 +86,11 @@ function CadastroUsuario() {
                 }
             ).then(
                 (retorno) => {
-                    setNomes([retorno.data.usuarios[0].nome]);
-                    setEmails([retorno.data.usuarios[0].email]);
-                    setAssinaturas([retorno.data.usuarios[0].assinaturaMedico]);
-                    setCrms([retorno.data.usuarios[0].medicoCrm]);
+                    setNome(retorno.data.usuarios[0].nome);
+                    setEmail(retorno.data.usuarios[0].email);
+                    setAssinatura(retorno.data.usuarios[0].assinaturaMedico);
+                    setCrm(retorno.data.usuarios[0].medicoCrm);
+                    setTipo(retorno.data.usuarios[0].tipoDeUsuario);
                 }
             )
         }
@@ -102,29 +103,34 @@ function CadastroUsuario() {
                     <Paper elevation={3} sx={{ p: 3 }} style={{ width: '32rem' }}>
                         <Box component="h1" align="center" display='flex' justifyContent='center' flexDirection='column'>
 
-                            <Typography variant="h4" component="h1" align="center"> 
-                                Cadastro de Usuário 
-                            </Typography>
+                            {!params.id && (
+                                <Typography variant='h4' component='h1' align='center'>
+                                    Cadastro de Usuário
+                                </Typography>
+                            )}
+                            {params.id && (
+                                <Typography variant='h4' component='h1' align='center'>
+                                    Edição de Usuário
+                                </Typography>
+                            )}
+                            
+                            <TextField
+                                required
+                                style={{marginTop: '1rem'}}
+                                label="Nome completo"
+                                name='nome'
+                                value={nome}
+                                onChange={updateInput(setNome)}                        
+                            />
 
-                            {nomes.map((nome) => (
-                                <TextField
-                                    required
-                                    style={{marginTop: '1rem'}}
-                                    label="Nome completo"
-                                    name='nome'
-                                    value={nome}                            
-                                />
-                            ))}
-
-                            {emails.map((email) => (
-                                <TextField
-                                    required
-                                    style={{marginTop: '1rem'}}
-                                    label="E-mail"
-                                    name='email'
-                                    value={email}                            
-                                />
-                            ))}
+                            <TextField
+                                required
+                                style={{marginTop: '1rem'}}
+                                label="E-mail"
+                                name='email'
+                                value={email}
+                                onChange={updateInput(setEmail)}                        
+                            />
                             
                             <FormControl
                                 style={{marginTop: '1rem'}}
@@ -132,10 +138,10 @@ function CadastroUsuario() {
                                 <InputLabel id="demo-simple-select-label">Tipo de usuário</InputLabel>
                                 <Select
                                     required
-                                    value={userType}
+                                    value={tipo}
                                     label="Tipo de usuário"
-                                    onChange={handleChange}
-                                    name='tipoDeUsuario'                         
+                                    name='tipoDeUsuario'
+                                    onChange={updateInput(setTipo)}                        
                                 >
                                     <MenuItem value="admin">Administrador</MenuItem>
                                     <MenuItem value="financeiro">Financeiro</MenuItem>
@@ -144,28 +150,25 @@ function CadastroUsuario() {
                                 </Select>
                             </FormControl>
 
-                            {showAdditionalFields && (
+                            {tipo === 'medico' && (
                                 <>
-                                    {assinaturas.map((assinatura) => (
-                                        <TextField
-                                            required
-                                            name="assinaturaMedico"
-                                            style={{marginTop: '1rem' }}
-                                            label="Assinatura"
-                                            value={assinatura}
-                                        />
-                                    ))}
-
-                                    {crms.map((cmr) => (
-                                        <TextField
-                                            required
-                                            style={{marginTop: '1rem' }}
-                                            label="CRM"
-                                            type="text"
-                                            name='medicoCrm'
-                                            value={cmr}
-                                        />
-                                    ))}
+                                    <TextField
+                                        required
+                                        name="assinaturaMedico"
+                                        style={{marginTop: '1rem' }}
+                                        label="Assinatura"
+                                        value={assinatura}
+                                        onChange={updateInput(setAssinatura)}                        
+                                    />
+                                    <TextField
+                                        required
+                                        style={{marginTop: '1rem' }}
+                                        label="CRM"
+                                        type="text"
+                                        name='medicoCrm'
+                                        value={crm}
+                                        onChange={updateInput(setCrm)}                        
+                                    />
                                 </>
                             )}
                             
