@@ -259,7 +259,7 @@ function CadastroRelatorio() {
                     style={{ width: '7rem' }}
                     onClick={handleBackHome}
                   >
-                    Voltar
+                    Voltar 
                   </Button>
                 </>
               )}
