@@ -10,7 +10,6 @@ import MateriaisCadastrados from './pages/materiais-cadastrados/materiais-cadast
 import UsuariosCadastrados from './pages/usuarios-cadastrados/usuarios-cadastrados';
 import CadastroMedicos from './pages/cadastro-medicos/cadastro-medicos';
 import MedicosCadastrados from './pages/medicos-cadastrados/medicos-cadastrados';
-import AprovarRelatorio from './pages/aprovar-relatorio/aprovar-relatorio';
 import RelatoriosAssinados from './pages/relatorios-assinados/relatorios-assinados';
 import AssinarRelatorio from './pages/assinar-relatorio/assinar-relatorio';
 
@@ -70,10 +69,6 @@ const router = createBrowserRouter([
   {
     path: "/medicos-cadastrados",
     element: <MedicosCadastrados />,
-  },
-  {
-    path: "/aprovar-relatorio",
-    element: <AprovarRelatorio />,
   },
   {
     path: "/relatorios-assinados",

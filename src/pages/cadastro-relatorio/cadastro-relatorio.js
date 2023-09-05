@@ -1,27 +1,30 @@
 import './cadastro-relatorio.css';
-import { Box, Button, Paper, TextField, Typography, Divider, Alert, AlertTitle, CircularProgress } from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Button, Paper, TextField, Typography, Divider, Alert, AlertTitle, LinearProgress } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function CadastroRelatorio() {
   const [materiaisList, setMateriaisList] = useState([{ referencia: '', quantidade: '', descricao: '', lote: '' }]);
-  const [isRelatorioCadastrado] = useState(false);
-  const [isRedirecting] = useState(false);
   const navigate = useNavigate ();
-  const [emptyFields] = useState([]);
   const session = JSON.parse(localStorage.getItem("user_session"));
   const userType = session.data.usuario.tipoDeUsuario;
+  const [descricao, setDescricao] = useState('');
+  const [qtdMaterial, setQtdMaterial] = useState('');
+  const [referencia, setReferencia] = useState('');
+  const [lote, setLote] = useState('');
+  const [medico, setMedico] = useState('');
+  const [instrumentador, setInstrumentador] = useState('');
+  const [medicoCrm, setMedicoCrm] = useState('');
+  const [paciente, setPaciente] = useState('');
+  const [hospital, setHospital] = useState('');
+  const [convenio, setConvenio] = useState('');
+  const [successMessage, setSuccessMessage] = useState(false);
+  const params = useParams();
+  const userSession = session.data.usuario.tipoDeUsuario;
 
   const handleAddMaterial = () => {
     setMateriaisList([...materiaisList, { referencia: '', quantidade: '', descricao: '', lote: '' }]);
-  };
-
-  const handleMaterialChange = (index, field, value) => {
-    const updatedMateriaisList = [...materiaisList];
-
-    updatedMateriaisList[index][field] = value;
-    setMateriaisList(updatedMateriaisList);
   };
 
   const handleRemoveMaterial = (index) => {
@@ -35,23 +38,71 @@ function CadastroRelatorio() {
       navigate('/home?is'+{userType}+'=true');
   }
 
+  function updateInput(setState){        
+    return (ev) => {
+        setState(ev.target.value)
+    }
+  }
+
   function onSubmit(event){
-    console.log('teste')
     event.preventDefault();
 
     const data = new FormData(event.target);
     var object = {};
-    
     data.forEach((value, key) => object[key] = value);
 
-    fetch('http://localhost:3001/pub/cadastrarRelatorio', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(object),
-    });
+    if (!params.id) {
+      fetch('http://localhost:3001/pub/cadastrarRelatorio', {
+          method: 'POST',
+          headers: {
+              'content-type': 'application/json'
+          },
+          body: JSON.stringify(object),
+      }).then(() => {
+          setSuccessMessage(true);
+          setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000);
+      });
+    } else {
+      fetch(`http://localhost:3001/pub/editarRelatorio/${params.id}`, {
+          method: 'POST',
+          headers: {
+              'content-type': 'application/json'
+          },
+          body: JSON.stringify(object),
+      }).then(() => {
+          setSuccessMessage(true); 
+          setTimeout(() => navigate('/relatorios-cadastrados'), 3000); 
+      });
+    }
   }
+
+  useEffect(() => {
+    if (params.id) {
+        fetch(`http://localhost:3001/pub/visualizarRelatorios?id=${params.id}`, {
+            method: 'GET',
+            headers: {
+            'content-type': 'application/json'
+            },
+        }).then(
+            (resposta) => {
+                return resposta.json()
+            }
+        ).then(
+            (retorno) => {
+              setDescricao(retorno.data.relatorios[0].descricao);
+              setQtdMaterial(retorno.data.relatorios[0].qtdMaterial);
+              setReferencia(retorno.data.relatorios[0].referencia);
+              setLote(retorno.data.relatorios[0].lote);
+              setMedico(retorno.data.relatorios[0].medico);
+              setInstrumentador(retorno.data.relatorios[0].instrumentador);
+              setMedicoCrm(retorno.data.relatorios[0].medicoCrm);
+              setPaciente(retorno.data.relatorios[0].paciente);
+              setHospital(retorno.data.relatorios[0].hospital);
+              setConvenio(retorno.data.relatorios[0].convenio);
+            }
+        )
+    }
+  }, [])
 
   return (
     <div className='backgroundCadastroRelatorio'>
@@ -70,15 +121,12 @@ function CadastroRelatorio() {
                 Consumo de material
               </Typography>
               
-              {materiaisList.map((materiais, index) => (
+              {materiaisList.map((index) => (
                 <div key={index}>
-                  {index > 0 && <Divider style={{ marginTop: '1rem', marginBottom: '1rem' }} />}
-                  
+                  {index > 0 && <Divider style={{ marginTop: '1rem', marginBottom: '1rem' }} />} 
+               
                   <TextField
                     required
-                    name="descricao"
-                    error={emptyFields.includes(index)}
-                    helperText={emptyFields.includes(index) && 'Campo obrigatório'}
                     style={{
                       marginTop: '1rem',
                       marginRight: '7rem',
@@ -86,15 +134,13 @@ function CadastroRelatorio() {
                       borderRadius: '4px'
                     }}
                     label="Descrição"
-                    type="text"
-                    value={materiais.descricao}
-                    onChange={(e) => handleMaterialChange(index, 'descricao', e.target.value)}
+                    name='descricao'
+                    value={descricao}
+                    onChange={updateInput(setDescricao)}                        
                   />
+
                   <TextField
                     required
-                    name="qtdMaterial"
-                    error={emptyFields.includes(index)}
-                    helperText={emptyFields.includes(index) && 'Campo obrigatório'}
                     style={{
                       marginTop: '1rem',
                       marginRight: '0.3rem',
@@ -102,15 +148,13 @@ function CadastroRelatorio() {
                       borderRadius: '4px'
                     }}
                     label="Quantidade"
-                    type="number"
-                    value={materiais.quantidade}
-                    onChange={(e) => handleMaterialChange(index, 'quantidade', e.target.value)}
+                    name="qtdMaterial"
+                    value={qtdMaterial}
+                    onChange={updateInput(setQtdMaterial)}
                   />
+
                   <TextField
                     required
-                    name="referenciaMaterial"
-                    error={emptyFields.includes(index)}
-                    helperText={emptyFields.includes(index) && 'Campo obrigatório'}
                     style={{
                       marginTop: '1rem',
                       marginRight: '0.3rem',
@@ -118,25 +162,24 @@ function CadastroRelatorio() {
                       borderRadius: '4px'
                     }}
                     label="Referência"
-                    type="text"
-                    value={materiais.referencia}
-                    onChange={(e) => handleMaterialChange(index, 'referencia', e.target.value)}
+                    name="referenciaMaterial"
+                    value={referencia}
+                    onChange={updateInput(setReferencia)}
                   />
+
                   <TextField
                     required
                     name="loteMaterial"
-                    error={emptyFields.includes(index)}
-                    helperText={emptyFields.includes(index) && 'Campo obrigatório'}
                     style={{
                       marginTop: '1rem',
                       width: '25%',
                       borderRadius: '4px'
                     }}
                     label="Lote"
-                    type="text"
-                    value={materiais.lote}
-                    onChange={(e) => handleMaterialChange(index, 'lote', e.target.value)}
+                    value={lote}
+                    onChange={updateInput(setLote)}
                   />
+
                   {index > 0 && (
                     <Button
                       variant="text"
@@ -171,43 +214,53 @@ function CadastroRelatorio() {
                   name="hospital"
                   style={{ marginTop: '1rem', width: '100%' }}
                   label="Hospital"
-                  type="text"
+                  value={hospital}
+                  onChange={updateInput(setHospital)}
                 />
+
                 <TextField
                   required
                   name="nomePaciente"
                   style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
                   label="Paciente"
-                  type="text"
+                  value={paciente}
+                  onChange={updateInput(setPaciente)}
                 />
+
                 <TextField
                   required
                   name="convenio"
                   style={{ marginTop: '1rem', width: '40%' }}
                   label="Convênio"
-                  type="text"
+                  value={convenio}
+                  onChange={updateInput(setConvenio)}
                 />
+
                 <TextField
                   required
-                  name="nome"
+                  name="medico"
                   style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
                   label="Médico"
-                  type="text"
+                  value={medico}
+                  onChange={updateInput(setMedico)}
                 />
+
                 <TextField
                   required
                   name="medicoCrm"
                   style={{ marginTop: '1rem', width: '40%' }}
                   label="CRM"
-                  type="text"
+                  value={medicoCrm}
+                  onChange={updateInput(setMedicoCrm)}
                 />
 
                 <TextField
                   required
-                  name="nome"
+                  name="instrumentador"
                   style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
                   label="Instrumentador"
-                  type="text"
+                  value={instrumentador}
+                  onChange={updateInput(setInstrumentador)}
                 />
                 
                 <TextField
@@ -235,35 +288,32 @@ function CadastroRelatorio() {
               </div>
             </Box>
 
-            <Box style={{ marginTop: '3rem' }}>
-              {isRelatorioCadastrado && isRedirecting ? (
-                <Box display="flex" alignItems="center">
-                  <Alert severity="success" style={{ marginRight: '1rem' }}>
-                    <AlertTitle>Relatório cadastrado com sucesso!</AlertTitle>
-                  </Alert>
-                  <CircularProgress color="primary" size={24} />
-                </Box>
-              ) : (
-                <>
-                  <Button
-                    color='primary'
-                    variant='contained'
-                    style={{ width: '7rem', marginRight: '1rem' }}
-                    type='submit'
+            <Box style={{ marginTop: '1rem' }}>                                                            
+              <Button
+                  color='primary'
+                  variant='contained'
+                  style={{ width: '7rem', marginRight: '1rem' }}
+                  type='submit'
                   >
-                    Ok
-                  </Button>
-                  <Button
-                    color='primary'
-                    variant='contained'
-                    style={{ width: '7rem' }}
-                    onClick={handleBackHome}
+                  Ok
+              </Button>
+              <Button
+                  color='primary'
+                  variant='contained'
+                  style={{ width: '7rem' }}
+                  onClick={handleBackHome}
                   >
-                    Voltar 
-                  </Button>
-                </>
-              )}
+                  Voltar
+              </Button>
             </Box>
+            {successMessage && (
+                <Box mt={2} width='100%'>
+                    <Alert severity="success">
+                        <AlertTitle> Salvo com sucesso! </AlertTitle>
+                        <LinearProgress color="success" size={24} />                                        
+                    </Alert>
+                </Box>
+            )}
           </Box>
         </Paper>
       </Box>

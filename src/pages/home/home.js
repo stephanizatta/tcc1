@@ -36,11 +36,6 @@ function Home() {
                                     Ver Relatórios Cadastrados
                                 </Button>
                             </Link>
-                            <Link to='/aprovar-relatorio' align='center'>
-                                <Button variant='text'>
-                                    Aprovar Relatório
-                                </Button>
-                            </Link>
                             <Link to='/relatorios-assinados' align='center'>
                                 <Button variant='text'>
                                     Ver Relatórios Assinados
@@ -146,12 +141,7 @@ function Home() {
                                     Ver Relatórios Assinados
                                 </Button>
                             </Link>
-                            <Divider/>                             
-                            <Link to='/aprovar-relatorio' align='center'>
-                                <Button variant='text'>
-                                    Aprovar Relatório
-                                </Button>
-                            </Link>
+                            <Divider/>
                         </React.Fragment>
                         )}
 
