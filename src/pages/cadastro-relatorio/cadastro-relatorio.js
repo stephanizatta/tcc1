@@ -1,5 +1,5 @@
 import './cadastro-relatorio.css';
-import { Box, Button, Paper, TextField, Typography, Divider, Alert, AlertTitle, LinearProgress } from '@mui/material';
+import { Box, Button, Paper, TextField, Typography, Divider, Alert, AlertTitle, LinearProgress, Autocomplete } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -22,6 +22,7 @@ function CadastroRelatorio() {
   const [successMessage, setSuccessMessage] = useState(false);
   const params = useParams();
   const userSession = session.data.usuario.tipoDeUsuario;
+  const [materiais, setMateriais] = useState([]);
 
   const handleAddMaterial = () => {
     setMateriaisList([...materiaisList, { referencia: '', quantidade: '', descricao: '', lote: '' }]);
@@ -77,6 +78,23 @@ function CadastroRelatorio() {
   }
 
   useEffect(() => {
+    fetch('http://localhost:3001/pub/visualizarMateriais', {
+        method: 'GET',
+        headers: {
+        'content-type': 'application/json'
+        },
+    }).then(
+        (resposta) => {
+            return resposta.json()
+        }
+    ).then(
+        (retorno) => {
+            setMateriais(retorno.data.materiais);
+        }
+    )
+}, [])
+
+  useEffect(() => {
     if (params.id) {
         fetch(`http://localhost:3001/pub/visualizarRelatorios?id=${params.id}`, {
             method: 'GET',
@@ -120,23 +138,23 @@ function CadastroRelatorio() {
               <Typography variant="h5" align="left" style={{ marginTop: '1rem' }}>
                 Consumo de material
               </Typography>
-              
-              {materiaisList.map((index) => (
+
+             
+
+              {materiaisList.map((material, index) => (
                 <div key={index}>
                   {index > 0 && <Divider style={{ marginTop: '1rem', marginBottom: '1rem' }} />} 
-               
-                  <TextField
-                    required
-                    style={{
-                      marginTop: '1rem',
-                      marginRight: '7rem',
-                      width: '100%',
-                      borderRadius: '4px'
-                    }}
-                    label="Descrição"
-                    name='descricao'
-                    value={descricao}
-                    onChange={updateInput(setDescricao)}                        
+                  <Autocomplete
+                    options={materiais}
+                    getOptionLabel={(material) => material.descricao}
+                    onChange={updateInput(setDescricao)}                     
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Descrição"
+                        name='descricao'
+                      />
+                    )}
                   />
 
                   <TextField
