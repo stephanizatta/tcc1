@@ -34,6 +34,13 @@ function CadastroRelatorio() {
     updatedMateriaisList.splice(index, 1);
     setMateriaisList(updatedMateriaisList);
   };
+  
+  const handleMaterialChange = (index, value) => {
+    const updatedMaterials = [...materiaisList];
+
+    updatedMaterials[index] = value;
+    setMateriaisList(updatedMaterials);
+  };
  
   function handleBackHome() {
       navigate('/home?is'+{userType}+'=true');
@@ -130,16 +137,14 @@ function CadastroRelatorio() {
             <Box display='flex' justifyContent='center' flexDirection='column'>
               <Typography variant="h4" component="h1" align="center">
                 Cadastro de Relatório
-                  </Typography>
+              </Typography>
 
             <br />
 
             <Box display='flex' justifyContent='center' style={{ width: '100%' }} flexDirection='column'>
               <Typography variant="h5" align="left" style={{ marginTop: '1rem' }}>
                 Consumo de material
-              </Typography>
-
-             
+              </Typography>            
 
               {materiaisList.map((material, index) => (
                 <div key={index}>
@@ -153,6 +158,7 @@ function CadastroRelatorio() {
                         {...params}
                         label="Descrição"
                         name='descricao'
+                        value={material.descricao}
                       />
                     )}
                   />
@@ -166,9 +172,10 @@ function CadastroRelatorio() {
                       borderRadius: '4px'
                     }}
                     label="Quantidade"
+                    type="number"
+                    value={material.quantidade}
                     name="qtdMaterial"
-                    value={qtdMaterial}
-                    onChange={updateInput(setQtdMaterial)}
+                    onChange={(e) => handleMaterialChange(index, e.target.value)}
                   />
 
                   <TextField
@@ -181,7 +188,7 @@ function CadastroRelatorio() {
                     }}
                     label="Referência"
                     name="referenciaMaterial"
-                    value={referencia}
+                    value={material.referencia}
                     onChange={updateInput(setReferencia)}
                   />
 
@@ -194,7 +201,7 @@ function CadastroRelatorio() {
                       borderRadius: '4px'
                     }}
                     label="Lote"
-                    value={lote}
+                    value={material.lote}
                     onChange={updateInput(setLote)}
                   />
 
