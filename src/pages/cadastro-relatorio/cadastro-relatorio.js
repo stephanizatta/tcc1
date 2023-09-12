@@ -36,14 +36,18 @@ function CadastroRelatorio() {
   };
   
   const handleMaterialChange = (index, value) => {
-    const updatedMaterials = [...materiaisList];
+    const updatedMateriaisList = [...materiaisList];
 
-    updatedMaterials[index] = value;
-    setMateriaisList(updatedMaterials);
+    updatedMateriaisList[index] = value;
+    setMateriaisList(updatedMateriaisList);
   };
  
   function handleBackHome() {
+      if (params.id) {
+        navigate('/relatorios-cadastrados');
+    } else {
       navigate('/home?is'+{userType}+'=true');
+    }
   }
 
   function updateInput(setState){        
@@ -99,7 +103,7 @@ function CadastroRelatorio() {
             setMateriais(retorno.data.materiais);
         }
     )
-}, [])
+  }, [])
 
   useEffect(() => {
     if (params.id) {
@@ -135,9 +139,17 @@ function CadastroRelatorio() {
         <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
           <Paper elevation={3} sx={{ p: 5 }} style={{ width: '75%' }}>
             <Box display='flex' justifyContent='center' flexDirection='column'>
-              <Typography variant="h4" component="h1" align="center">
-                Cadastro de Relatório
-              </Typography>
+              
+            {!params.id && (
+                <Typography variant='h4' component='h1' align='center'>
+                    Cadastro de Relatório
+                </Typography>
+            )}
+            {params.id && (
+                <Typography variant='h4' component='h1' align='center'>
+                    Edição de Relatório
+                </Typography>
+            )}
 
             <br />
 
@@ -152,7 +164,7 @@ function CadastroRelatorio() {
                   <Autocomplete
                     options={materiais}
                     getOptionLabel={(material) => material.descricao}
-                    onChange={updateInput(setDescricao)}                     
+                    onChange={(e) => handleMaterialChange(index, e.target.value)}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -164,7 +176,6 @@ function CadastroRelatorio() {
                   />
 
                   <TextField
-                    required
                     style={{
                       marginTop: '1rem',
                       marginRight: '0.3rem',
@@ -179,7 +190,6 @@ function CadastroRelatorio() {
                   />
 
                   <TextField
-                    required
                     style={{
                       marginTop: '1rem',
                       marginRight: '0.3rem',
@@ -189,11 +199,10 @@ function CadastroRelatorio() {
                     label="Referência"
                     name="referenciaMaterial"
                     value={material.referencia}
-                    onChange={updateInput(setReferencia)}
+                    onChange={(e) => handleMaterialChange(index, e.target.value)}
                   />
 
                   <TextField
-                    required
                     name="loteMaterial"
                     style={{
                       marginTop: '1rem',
@@ -202,7 +211,7 @@ function CadastroRelatorio() {
                     }}
                     label="Lote"
                     value={material.lote}
-                    onChange={updateInput(setLote)}
+                    onChange={(e) => handleMaterialChange(index, e.target.value)}
                   />
 
                   {index > 0 && (
@@ -235,7 +244,6 @@ function CadastroRelatorio() {
 
               <div>
                 <TextField
-                  required
                   name="hospital"
                   style={{ marginTop: '1rem', width: '100%' }}
                   label="Hospital"
@@ -244,7 +252,6 @@ function CadastroRelatorio() {
                 />
 
                 <TextField
-                  required
                   name="nomePaciente"
                   style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
                   label="Paciente"
@@ -253,7 +260,6 @@ function CadastroRelatorio() {
                 />
 
                 <TextField
-                  required
                   name="convenio"
                   style={{ marginTop: '1rem', width: '40%' }}
                   label="Convênio"
@@ -262,7 +268,6 @@ function CadastroRelatorio() {
                 />
 
                 <TextField
-                  required
                   name="medico"
                   style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
                   label="Médico"
@@ -271,7 +276,6 @@ function CadastroRelatorio() {
                 />
 
                 <TextField
-                  required
                   name="medicoCrm"
                   style={{ marginTop: '1rem', width: '40%' }}
                   label="CRM"
@@ -280,7 +284,6 @@ function CadastroRelatorio() {
                 />
 
                 <TextField
-                  required
                   name="instrumentador"
                   style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
                   label="Instrumentador"
@@ -289,7 +292,6 @@ function CadastroRelatorio() {
                 />
                 
                 <TextField
-                  required
                   name="data"
                   style={{ marginTop: '1rem', marginRight: '0.2rem', width: '19.8%' }}
                   label="Data"
@@ -299,7 +301,6 @@ function CadastroRelatorio() {
                   }}
                 />
                 <TextField
-                  required
                   name="hora"
                   style={{ marginTop: '1rem', width: '19.8%' }}
                   label="Hora"

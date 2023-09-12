@@ -85,6 +85,16 @@ function Login() {
                   Entrar
                 </Button>
               </Box>
+              
+              <br />
+
+              <Box display="flex" justifyContent="center">
+                <Link to='cadastro-medicos'>
+                  <Button variant='text'>
+                    É médico e não possui cadastro? Clique aqui
+                  </Button>
+                </Link>
+              </Box>
 
               <Box display="flex" justifyContent="center">
                 <Link to='esqueceu-senha'>
