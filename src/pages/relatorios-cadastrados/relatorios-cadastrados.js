@@ -75,10 +75,15 @@ function RelatoriosCadastrados() {
                                             <CardContent>
                                                 <Box display='flex' alignItems='center'>
                                                     <Typography>
-                                                        Quantidade:  <br />
-                                                        Descrição: <br />
-                                                        Referência:  <br />
-                                                        Lote: <br />
+                                                        {relatorio.RelatorioMaterials.map(item => (
+                                                            <>
+                                                                Quantidade: {item.qtdMaterial}  <br />
+                                                                Descrição: {item.Material.descricao} <br />
+                                                                Referência: {item.referenciaMaterial} <br />
+                                                                Lote: {item.loteMaterial} <br />
+                                                            </>
+                                                        ))}
+
                                                         Hospital: {relatorio.hospital} <br/>
                                                         Médico: {relatorio.medico} <br/>
                                                         CRM: {relatorio.medicoCrm} <br/>
