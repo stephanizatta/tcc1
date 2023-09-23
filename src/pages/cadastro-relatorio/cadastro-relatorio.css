@@ -1,40 +1,41 @@
 .backgroundCadastroRelatorio {
-    background-color: rgb(255, 255, 255, 0.8);
-    position:fixed;
-    width: 80%;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 30rem;
-    background: url("../../../public/imagemfundo.png") no-repeat right top fixed;
-    background-size: cover;
+  background-color: rgb(255, 255, 255, 0.8);
+  position:fixed;
+  width: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30rem;
+  background: url("../../../public/imagemfundo.png") no-repeat right top fixed;
+  background-size: cover;
 }
 
 /* Desktop */
 @media only screen and (min-width: 768px) {
-  body {
-    width: 80%;
-    margin: 0 auto;
-  }
+.backgroundCadastroRelatorio {
+  width: 70%;
+  text-align: justify;
+  margin: 0 auto;
+}
 }
 
 /* Mobile */
 @media only screen and (max-width: 767px) {
-  body {
-    width: 100%;
-  }
-
-  header {
-    text-align: center;
-  }
-
-  nav li {
-    display: block;
-    margin: 10px 0;
-  }
+.backgroundCadastroRelatorio {
+  width: 100%;
 }
 
-  .backgroundCadastroRelatorio {
-    height: 500px;
-    overflow-y: scroll;
-  }
+.backgroundCadastroRelatorio {
+  text-align: justify;
+}
+
+.backgroundCadastroRelatorio {
+  display: block;
+  margin: 10px 0;
+}
+}
+
+.backgroundCadastroRelatorio {
+  height: 500px;
+  overflow-y: scroll;
+}
