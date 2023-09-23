@@ -146,31 +146,8 @@ function CadastroUsuario() {
                                     <MenuItem value="admin">Administrador</MenuItem>
                                     <MenuItem value="financeiro">Financeiro</MenuItem>
                                     <MenuItem value="instrumentador">Instrumentador</MenuItem>
-                                    <MenuItem value="medico">Médico</MenuItem>
                                 </Select>
                             </FormControl>
-
-                            {tipo === 'medico' && (
-                                <>
-                                    <TextField
-                                        required
-                                        name="assinaturaMedico"
-                                        style={{marginTop: '1rem' }}
-                                        label="Assinatura"
-                                        value={assinatura}
-                                        onChange={updateInput(setAssinatura)}                        
-                                    />
-                                    <TextField
-                                        required
-                                        style={{marginTop: '1rem' }}
-                                        label="CRM"
-                                        type="text"
-                                        name='medicoCrm'
-                                        value={crm}
-                                        onChange={updateInput(setCrm)}                        
-                                    />
-                                </>
-                            )}
                             
                             <TextField
                                 required

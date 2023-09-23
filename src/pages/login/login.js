@@ -31,7 +31,7 @@ function Login() {
     if (session.success === false || session.email === "" || session.senha === "") {
       setErrorMessage('Credenciais inválidas. Por favor, verifique seu e-mail e senha.');
     } else {
-      window.location.href = '/home';
+    window.location.href = '/home';
     }
   }
 

@@ -77,10 +77,11 @@ function RelatoriosCadastrados() {
                                                     <Typography>
                                                         {relatorio.RelatorioMaterials.map(item => (
                                                             <>
-                                                                Quantidade: {item.qtdMaterial}  <br />
                                                                 Descrição: {item.Material.descricao} <br />
+                                                                Quantidade: {item.qtdMaterial}  <br />                                                                
                                                                 Referência: {item.referenciaMaterial} <br />
                                                                 Lote: {item.loteMaterial} <br />
+                                                                <br />
                                                             </>
                                                         ))}
 

@@ -79,18 +79,20 @@ function UsuariosCadastrados() {
                                                         Tipo: {usuario.tipoDeUsuario}
                                                     </Typography>
 
-                                                    <Box ml='auto'>
-                                                        <CardActions>
-                                                            <Link to={"/cadastro-usuario/" + usuario.id}>
-                                                                <Button startIcon={<EditIcon />} />
-                                                            </Link>
-                                                            <Button 
-                                                                color='error' 
-                                                                startIcon={<DeleteIcon />} 
-                                                                onClick={() => deleteUsuario(usuario.id)}
-                                                            />
-                                                        </CardActions>
-                                                    </Box>
+                                                    {usuario.tipoDeUsuario != "admin" && (
+                                                        <Box ml='auto'>
+                                                            <CardActions>
+                                                                <Link to={"/cadastro-usuario/" + usuario.id}>
+                                                                    <Button startIcon={<EditIcon />} />
+                                                                </Link>                                                            
+                                                                    <Button 
+                                                                        color='error' 
+                                                                        startIcon={<DeleteIcon />} 
+                                                                        onClick={() => deleteUsuario(usuario.id)}
+                                                                    />
+                                                            </CardActions>
+                                                        </Box>
+                                                    )}
                                                 </Box>
                                             </CardContent>
                                         </Card>

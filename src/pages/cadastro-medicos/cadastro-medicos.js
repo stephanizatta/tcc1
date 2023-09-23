@@ -7,14 +7,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 function CadastroMedicos() {
     const navigate = useNavigate ();
-    const session = JSON.parse(localStorage.getItem("user_session"));
-    const userSession = session.data.usuario.tipoDeUsuario;
     const [successMessage, setSuccessMessage] = useState(false);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
-    const params = useParams();
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [assinatura, setAssinatura] = useState('');
@@ -99,14 +97,6 @@ function CadastroMedicos() {
 
                             <TextField
                                 required
-                                name="assinaturaMedico"
-                                style={{marginTop: '1rem' }}
-                                label="Assinatura"
-                                value={assinatura}
-                                onChange={updateInput(setAssinatura)}                        
-                            />
-                            <TextField
-                                required
                                 style={{marginTop: '1rem' }}
                                 label="CRM"
                                 type="text"
@@ -137,8 +127,17 @@ function CadastroMedicos() {
                                     </Alert>
                                 </Box>
                             )}
+
+                            <Box style={{ marginTop: '1rem' }}>
+                                <Button
+                                    startIcon={<BorderColorIcon />}
+                                    //onClick={onClickAssinar}
+                                >
+                                    Cadastrar Assinatura
+                                </Button>
+                            </Box>
                             
-                            <Box style={{ marginTop: '1rem' }}>                                                            
+                            <Box style={{ marginTop: '1rem' }}>                                                         
                                 <Button
                                     color='primary'
                                     variant='contained'
