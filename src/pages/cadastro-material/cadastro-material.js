@@ -12,6 +12,7 @@ function CadastroMaterial() {
     const userType = session.data.usuario.tipoDeUsuario;
     const userSession = session.data.usuario.tipoDeUsuario;
     const params = useParams();
+    const [materialExistente, setMaterialExistente] = useState(false);
 
     const handleAddDescription = () => {
         setDescriptions([...descriptions, '']);
@@ -53,9 +54,14 @@ function CadastroMaterial() {
                     'content-type': 'application/json'
                 },
                 body: JSON.stringify({descriptions}),
-            }).then(() => {
-                setSuccessMessage(true);
-                setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000);
+            }).then(async (response) => {
+                if (response.status === 500) {
+                    setMaterialExistente(true);
+                } else {
+                    setMaterialExistente(false);
+                    setSuccessMessage(true);
+                    setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000);
+                }
             });
         } else {
             fetch(`http://localhost:3001/pub/editarMaterial/${params.id}`, {
@@ -113,6 +119,7 @@ function CadastroMaterial() {
                             {descriptions.map((description, index) => (
                                 <Box key={index} display='flex' alignItems='center'>
                                     <TextField
+                                        required
                                         style={{ marginTop: '1rem', width: '100%' }}
                                         label='Descrição'
                                         type='text'
@@ -140,8 +147,15 @@ function CadastroMaterial() {
                                 </Button>
                             )}
 
-                            <Box style={{ marginTop: '1rem' }}>
-                                
+                            {materialExistente && (
+                                <Box mt={2} width='100%'>
+                                    <Alert severity="error">
+                                        <AlertTitle>Material já existente</AlertTitle>
+                                    </Alert>
+                                </Box>
+                            )}
+
+                            <Box style={{ marginTop: '1rem' }}>                                
                                 <Button
                                     color='primary'
                                     variant='contained'

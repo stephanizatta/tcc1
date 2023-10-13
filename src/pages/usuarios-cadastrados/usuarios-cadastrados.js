@@ -74,22 +74,41 @@ function UsuariosCadastrados() {
                                         <Card variant='outlined'>
                                             <CardContent>
                                                 <Box display='flex' alignItems='center'>
-                                                    <Typography>
-                                                        {usuario.nome} <br/>
-                                                        Tipo: {usuario.tipoDeUsuario}
-                                                    </Typography>
+                                                    {usuario.tipoDeUsuario !== "medico" && (
+                                                        <Typography>
+                                                            {usuario.nome} <br/>
+                                                            Tipo: {usuario.tipoDeUsuario}
+                                                        </Typography>
+                                                    )}
 
-                                                    {usuario.tipoDeUsuario != "admin" && (
+                                                    {usuario.tipoDeUsuario === "medico" && (
+                                                        <Typography>
+                                                            {usuario.nome} <br/>
+                                                            Tipo: {usuario.tipoDeUsuario} <br/>
+                                                            Assinatura: <br/>
+                                                            {usuario.assinaturaMedico && <img alt="Assinatura" src={usuario.assinaturaMedico}/>}
+                                                        </Typography>
+                                                    )}
+
+                                                    {usuario.tipoDeUsuario !== "admin" && (
                                                         <Box ml='auto'>
                                                             <CardActions>
-                                                                <Link to={"/cadastro-usuario/" + usuario.id}>
-                                                                    <Button startIcon={<EditIcon />} />
-                                                                </Link>                                                            
-                                                                    <Button 
-                                                                        color='error' 
-                                                                        startIcon={<DeleteIcon />} 
-                                                                        onClick={() => deleteUsuario(usuario.id)}
-                                                                    />
+                                                                {usuario.tipoDeUsuario !== "medico" && (
+                                                                    <Link to={"/cadastro-usuario/" + usuario.id}>
+                                                                        <Button startIcon={<EditIcon />} />
+                                                                    </Link>
+                                                                )}  
+                                                                {usuario.tipoDeUsuario === "medico" && (
+                                                                    <Link to={"/cadastro-medicos/" + usuario.id}>
+                                                                        <Button startIcon={<EditIcon />} />
+                                                                    </Link>
+                                                                )}
+
+                                                                <Button 
+                                                                    color='error' 
+                                                                    startIcon={<DeleteIcon />} 
+                                                                    onClick={() => deleteUsuario(usuario.id)}
+                                                                />
                                                             </CardActions>
                                                         </Box>
                                                     )}

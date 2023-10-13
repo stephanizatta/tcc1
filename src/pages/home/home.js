@@ -100,14 +100,36 @@ function Home() {
                                 </Button>
                             </Link>
                             <Divider/>
-                            <Link  to='/cadastro-medicos' align='center'>
+                            <Link to='/usuarios-cadastrados' align='center'>
                                 <Button variant='text'>
-                                    Cadastrar Novo Médico
+                                    Ver Usuários Cadastrados
                                 </Button>
                             </Link>
-                            <Link to='/medicos-cadastrados' align='center'>
+                        </React.Fragment>
+                        )}
+
+                        {userType === "financeiro" && (
+                        <React.Fragment>
+                            <Link to='/relatorios-cadastrados' align='center'>
                                 <Button variant='text'>
-                                    Ver Médicos Cadastrados
+                                    Ver Relatórios Cadastrados
+                                </Button>
+                            </Link>
+                            <Link to='/relatorios-assinados' align='center'>
+                                <Button variant='text'>
+                                    Ver Relatórios Assinados
+                                </Button>
+                            </Link>
+                            <Divider/>
+                            <Link to='/materiais-cadastrados' align='center'>
+                                <Button variant='text'>
+                                    Ver Materiais Cadastrados
+                                </Button>
+                            </Link>
+                            <Divider/>
+                            <Link to='/usuarios-cadastrados' align='center'>
+                                <Button variant='text'>
+                                    Ver Usuários Cadastrados
                                 </Button>
                             </Link>
                         </React.Fragment>
@@ -126,22 +148,6 @@ function Home() {
                                     Assinar Relatório
                                 </Button>
                             </Link>
-                        </React.Fragment>
-                        )}
-
-                        {userType === "financeiro" && (
-                        <React.Fragment>                            
-                            <Link to='/cadastro-relatorio' align='center'>
-                                <Button variant='text'>
-                                    Ver Relatórios Cadastrados
-                                </Button>
-                            </Link>
-                            <Link to='/relatorios-assinados' align='center'>
-                                <Button variant='text'>
-                                    Ver Relatórios Assinados
-                                </Button>
-                            </Link>
-                            <Divider/>
                         </React.Fragment>
                         )}
 

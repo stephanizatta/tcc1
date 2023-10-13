@@ -9,20 +9,19 @@ function CadastroRelatorio() {
   const navigate = useNavigate ();
   const session = JSON.parse(localStorage.getItem("user_session"));
   const userType = session.data.usuario.tipoDeUsuario;
-  const [descricao, setDescricao] = useState('');
-  const [qtdMaterial, setQtdMaterial] = useState('');
-  const [referencia, setReferencia] = useState('');
-  const [lote, setLote] = useState('');
   const [medico, setMedico] = useState('');
   const [instrumentador, setInstrumentador] = useState('');
   const [medicoCrm, setMedicoCrm] = useState('');
   const [paciente, setPaciente] = useState('');
   const [hospital, setHospital] = useState('');
   const [convenio, setConvenio] = useState('');
+  const [hora, setHora] = useState('');
+  const [data, setData] = useState('');
   const [successMessage, setSuccessMessage] = useState(false);
   const params = useParams();
   const userSession = session.data.usuario.tipoDeUsuario;
   const [materiais, setMateriais] = useState([]);
+  const [medicos, setMedicos] = useState([]);
 
   const handleAddMaterial = () => {
     setMateriaisList([...materiaisList, { referencia: '', quantidade: '', descricao: '', lote: '' }]);
@@ -37,9 +36,14 @@ function CadastroRelatorio() {
   
   const handleMaterialChange = (index, value, campo) => {
     const updatedMateriaisList = [...materiaisList];
-    console.log(value)
     updatedMateriaisList[index][campo] = value;
     setMateriaisList(updatedMateriaisList);
+  };
+
+  const handleMedicoChange = (index, value, campo) => {
+    const updatedMedicosList = [...medicoList];
+    updatedMedicosList[index][campo] = value;
+    setMedicosList(updatedMedicosList);
   };
  
   function handleBackHome() {
@@ -103,6 +107,7 @@ function CadastroRelatorio() {
     ).then(
         (retorno) => {
             setMateriais(retorno.data.materiais);
+            setMedicos(retorno.data.medicos);
         }
     )
   }, [])
@@ -119,21 +124,25 @@ function CadastroRelatorio() {
                 return resposta.json()
             }
         ).then(
-            (retorno) => {
-              setDescricao(retorno.data.relatorios[0].descricao);
-              setQtdMaterial(retorno.data.relatorios[0].qtdMaterial);
-              setReferencia(retorno.data.relatorios[0].referencia);
-              setLote(retorno.data.relatorios[0].lote);
-              setMedico(retorno.data.relatorios[0].medico);
-              setInstrumentador(retorno.data.relatorios[0].instrumentador);
-              setMedicoCrm(retorno.data.relatorios[0].medicoCrm);
-              setPaciente(retorno.data.relatorios[0].paciente);
-              setHospital(retorno.data.relatorios[0].hospital);
-              setConvenio(retorno.data.relatorios[0].convenio);
-            }
+          (retorno) => {
+            setMateriaisList(retorno.data.relatorios[0].RelatorioMaterials.map(
+              relatorioMaterial => ({descricao: relatorioMaterial.Material.descricao,
+                idMaterial: relatorioMaterial.idMaterial,
+                quantidade: relatorioMaterial.qtdMaterial, 
+                referencia: relatorioMaterial.referenciaMaterial, 
+                lote: relatorioMaterial.loteMaterial })));
+            setMedico(retorno.data.relatorios[0].medico);
+            setInstrumentador(retorno.data.relatorios[0].instrumentador);
+            setMedicoCrm(retorno.data.relatorios[0].medicoCrm);
+            setPaciente(retorno.data.relatorios[0].nomePaciente);
+            setHospital(retorno.data.relatorios[0].hospital);
+            setConvenio(retorno.data.relatorios[0].convenio);
+            setData(retorno.data.relatorios[0].createdAt.split('T')[0]);
+            setHora(retorno.data.relatorios[0].createdAt.split('T')[1].split('.')[0]);
+          }
         )
     }
-  }, [])
+  }, [params.id])
 
   return (
     <div className='backgroundCadastroRelatorio'>
@@ -165,6 +174,7 @@ function CadastroRelatorio() {
                   {index > 0 && <Divider style={{ marginTop: '1rem', marginBottom: '1rem' }} />} 
                   <Autocomplete
                     options={materiais}
+                    value={materiais.find(m => m.id === material.idMaterial) ?? null}
                     getOptionLabel={(material) => material.descricao}
                     onChange={(e, value) => handleMaterialChange(index, value.id, 'idMaterial')}
                     renderInput={(params) => (
@@ -276,13 +286,21 @@ function CadastroRelatorio() {
                   onChange={updateInput(setConvenio)}
                 />
 
-                <TextField
-                  required
-                  name="medico"
-                  style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
-                  label="Médico"
-                  value={medico}
-                  onChange={updateInput(setMedico)}
+                <Autocomplete
+                  options={medicos}
+                  value={medicos.find(m => m.id === medico.id) ?? null}
+                  getOptionLabel={(medico) => medico.nome}
+                  onChange={(e, value) => handleMedicoChange(index, value.id, 'id')}
+                  renderInput={(params) => (
+                    <TextField
+                      required
+                      {...params}
+                      label="Médico"
+                      name="medico"
+                      style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
+                      value={medico}
+                    />
+                  )}
                 />
 
                 <TextField
@@ -308,6 +326,8 @@ function CadastroRelatorio() {
                   name="data"
                   style={{ marginTop: '1rem', marginRight: '0.2rem', width: '19.8%' }}
                   label="Data"
+                  value={data}
+                  onChange={updateInput(setData)}
                   type="date"
                   InputLabelProps={{
                     shrink: true
@@ -318,13 +338,13 @@ function CadastroRelatorio() {
                   name="hora"
                   style={{ marginTop: '1rem', width: '19.8%' }}
                   label="Hora"
+                  value={hora}
+                  onChange={updateInput(setHora)}
                   type="time"
                   InputLabelProps={{
                     shrink: true
                   }}
-                />
-                
-                
+                />              
               </div>
             </Box>
 

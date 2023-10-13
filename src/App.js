@@ -67,6 +67,10 @@ const router = createBrowserRouter([
     element: <CadastroMedicos />,
   },
   {
+    path: "/cadastro-medicos/:id",
+    element: <CadastroMedicos />,
+  },
+  {
     path: "/medicos-cadastrados",
     element: <MedicosCadastrados />,
   },

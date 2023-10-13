@@ -18,9 +18,8 @@ function CadastroUsuario() {
     const params = useParams();
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
-    const [assinatura, setAssinatura] = useState('');
-    const [crm, setCrm] = useState('');
     const [tipo, setTipo] = useState('');
+    const [emailExistente, setEmailExistente] = useState(false);
 
     function handleBackHome() {
         if (params.id) {
@@ -49,9 +48,14 @@ function CadastroUsuario() {
                     'content-type': 'application/json'
                 },
                 body: JSON.stringify(object),
-            }).then(() => {
-                setSuccessMessage(true);
-                setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000);
+            }).then(async (response) => {
+                if (response.status === 500) {
+                    setEmailExistente(true);
+                } else {
+                    setEmailExistente(false);
+                    setSuccessMessage(true);
+                    setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000);
+                }
             });
         } else {
             fetch(`http://localhost:3001/pub/editarUsuario/${params.id}`, {
@@ -60,9 +64,14 @@ function CadastroUsuario() {
                     'content-type': 'application/json'
                 },
                 body: JSON.stringify(object),
-            }).then(() => {
-                setSuccessMessage(true); 
-                setTimeout(() => navigate('/usuarios-cadastrados'), 3000); 
+            }).then(async (response) => {
+                if (response.status === 500) {
+                    setEmailExistente(true);
+                } else {
+                    setEmailExistente(false);
+                    setSuccessMessage(true);
+                    setTimeout(() => navigate('/usuarios-cadastrados'), 3000); 
+                }
             });
         }
     }
@@ -88,13 +97,11 @@ function CadastroUsuario() {
                 (retorno) => {
                     setNome(retorno.data.usuarios[0].nome);
                     setEmail(retorno.data.usuarios[0].email);
-                    setAssinatura(retorno.data.usuarios[0].assinaturaMedico);
-                    setCrm(retorno.data.usuarios[0].medicoCrm);
                     setTipo(retorno.data.usuarios[0].tipoDeUsuario);
                 }
             )
         }
-    }, [])
+    }, [params.id])
 
     return (
         <div className='backgroundCadastro'>
@@ -170,6 +177,14 @@ function CadastroUsuario() {
                                         <AlertTitle>Senhas não coincidem</AlertTitle>
                                     </Alert>
                                 </Box>
+                            )}
+
+                            {emailExistente && (
+                                <Box mt={2} width='100%'>
+                                <Alert severity="error">
+                                    <AlertTitle>Email já existente</AlertTitle>
+                                </Alert>
+                            </Box>
                             )}
                             
                             <Box style={{ marginTop: '1rem' }}>                                                            

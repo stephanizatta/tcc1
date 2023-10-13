@@ -19,7 +19,7 @@ function RelatoriosCadastrados() {
    }
 
     function deleteRelatorio(relatorioId) {
-        fetch(`http://localhost:3001/pub/excluirUsuario/${relatorioId}`, {
+        fetch(`http://localhost:3001/pub/excluirRelatorio/${relatorioId}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -89,9 +89,19 @@ function RelatoriosCadastrados() {
                                                         Médico: {relatorio.medico} <br/>
                                                         CRM: {relatorio.medicoCrm} <br/>
                                                         Paciente: {relatorio.nomePaciente} <br/>
-                                                        Data e hora: {relatorio.data} <br/>
+                                                        Data: {relatorio.data.split('T')[0].split('-')[2] + '/' + relatorio.data.split('T')[0].split('-')[1] + '/' + relatorio.data.split('T')[0].split('-')[0]} <br/>
+                                                        Hora: {relatorio.data.split('T')[1].split('.')[0].split(':')[0] + ':' + relatorio.data.split('T')[1].split('.')[0].split(':')[1]} <br/>
                                                         Instrumentador: {relatorio.instrumentador} <br/>
-                                                        Convênio: {relatorio.convenio}
+                                                        Convênio: {relatorio.convenio} <br/>
+                                                        Assinatura do médico: <br/>
+                                                        {relatorio.assinaturaMedico && <img alt="Assinatura" src={relatorio.assinaturaMedico}/>}
+                                                       
+                                                        {!relatorio.assinaturaMedico && (
+                                                            <Typography variant='h6' component='h6' align='center'>
+                                                                Relatório ainda não assinado
+                                                            </Typography>
+                                                        )}
+                                                        
                                                     </Typography>
 
                                                     <Box ml='auto'>
