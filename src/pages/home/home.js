@@ -2,13 +2,19 @@ import './home.css';
 import React from 'react';
 import { Box, Button, Divider, Paper, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
     const session = JSON.parse(localStorage.getItem("user_session"));
     const userType = session.data.usuario.tipoDeUsuario;
+    const navigate = useNavigate ();
 
     function handleLogout() {
         window.location.href = '/';
+    }
+
+    function handleEditarPerfil() {
+        navigate('/cadastro-usuario/');
     }
 
     return (
@@ -155,10 +161,18 @@ function Home() {
                         <Box display="flex" justifyContent="center">                      
                             <Button
                                 color='primary' variant='contained' 
-                                style={{ width: '7rem'}}
+                                style={{ width: '8rem', marginRight: '8px'}}
                                 onClick={handleLogout}
                             >
                                 Sair
+                            </Button>
+                            <Button
+                                color='primary' variant='contained' 
+                                style={{ widtlemeuh: '8rem'}}
+                                onClick={handleEditarPerfil}
+
+                            >
+                                Editar perfil
                             </Button>
                         </Box>
                     </Box>

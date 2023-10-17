@@ -9,7 +9,6 @@ function CadastroRelatorio() {
   const navigate = useNavigate ();
   const session = JSON.parse(localStorage.getItem("user_session"));
   const userType = session.data.usuario.tipoDeUsuario;
-  const [medico, setMedico] = useState('');
   const [instrumentador, setInstrumentador] = useState('');
   const [medicoCrm, setMedicoCrm] = useState('');
   const [paciente, setPaciente] = useState('');
@@ -21,7 +20,8 @@ function CadastroRelatorio() {
   const params = useParams();
   const userSession = session.data.usuario.tipoDeUsuario;
   const [materiais, setMateriais] = useState([]);
-  const [medicos, setMedicos] = useState([]);
+  const [medicosList, setMedicosList] = useState([{ nome: '' }]);
+  const [medico, setMedico] = useState([]);
 
   const handleAddMaterial = () => {
     setMateriaisList([...materiaisList, { referencia: '', quantidade: '', descricao: '', lote: '' }]);
@@ -38,12 +38,6 @@ function CadastroRelatorio() {
     const updatedMateriaisList = [...materiaisList];
     updatedMateriaisList[index][campo] = value;
     setMateriaisList(updatedMateriaisList);
-  };
-
-  const handleMedicoChange = (index, value, campo) => {
-    const updatedMedicosList = [...medicoList];
-    updatedMedicosList[index][campo] = value;
-    setMedicosList(updatedMedicosList);
   };
  
   function handleBackHome() {
@@ -106,8 +100,24 @@ function CadastroRelatorio() {
         }
     ).then(
         (retorno) => {
-            setMateriais(retorno.data.materiais);
-            setMedicos(retorno.data.medicos);
+          setMateriais(retorno.data.materiais);
+        }
+    )
+  }, [])
+
+  useEffect(() => {
+    fetch('http://localhost:3001/pub/visualizarMedicos', {
+        method: 'GET',
+        headers: {
+        'content-type': 'application/json'
+        },
+    }).then(
+        (resposta) => {
+            return resposta.json()
+        }
+    ).then(
+        (retorno) => {
+          setMedicosList(retorno.data.medicos);
         }
     )
   }, [])
@@ -130,10 +140,12 @@ function CadastroRelatorio() {
                 idMaterial: relatorioMaterial.idMaterial,
                 quantidade: relatorioMaterial.qtdMaterial, 
                 referencia: relatorioMaterial.referenciaMaterial, 
-                lote: relatorioMaterial.loteMaterial })));
-            setMedico(retorno.data.relatorios[0].medico);
+                lote: relatorioMaterial.loteMaterial })
+              )
+            );
             setInstrumentador(retorno.data.relatorios[0].instrumentador);
             setMedicoCrm(retorno.data.relatorios[0].medicoCrm);
+            setMedico(retorno.data.relatorios[0].medico);
             setPaciente(retorno.data.relatorios[0].nomePaciente);
             setHospital(retorno.data.relatorios[0].hospital);
             setConvenio(retorno.data.relatorios[0].convenio);
@@ -284,29 +296,28 @@ function CadastroRelatorio() {
                   label="Convênio"
                   value={convenio}
                   onChange={updateInput(setConvenio)}
-                />
+                />              
 
                 <Autocomplete
-                  options={medicos}
-                  value={medicos.find(m => m.id === medico.id) ?? null}
+                  options={medicosList}
+                  value={medicosList.find(m => m.nome === medico) ?? null}
                   getOptionLabel={(medico) => medico.nome}
-                  onChange={(e, value) => handleMedicoChange(index, value.id, 'id')}
+                  onChange={(_, value) => setMedico(value.nome)}
                   renderInput={(params) => (
                     <TextField
                       required
                       {...params}
                       label="Médico"
-                      name="medico"
-                      style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
-                      value={medico}
+                      name='medico'
+                      style={{ marginTop: '1rem' }}
                     />
                   )}
-                />
+                />                   
 
                 <TextField
                   required
                   name="medicoCrm"
-                  style={{ marginTop: '1rem', width: '40%' }}
+                  style={{ marginTop: '1rem', width: '40%', marginRight: '3px' }}
                   label="CRM"
                   value={medicoCrm}
                   onChange={updateInput(setMedicoCrm)}
