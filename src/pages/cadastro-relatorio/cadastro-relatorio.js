@@ -22,6 +22,7 @@ function CadastroRelatorio() {
   const [materiais, setMateriais] = useState([]);
   const [medicosList, setMedicosList] = useState([{ nome: '' }]);
   const [medico, setMedico] = useState([]);
+  const [instrumentadorList, setInstrumentadorList] = useState([{ nome: '' }]);
 
   const handleAddMaterial = () => {
     setMateriaisList([...materiaisList, { referencia: '', quantidade: '', descricao: '', lote: '' }]);
@@ -118,6 +119,23 @@ function CadastroRelatorio() {
     ).then(
         (retorno) => {
           setMedicosList(retorno.data.medicos);
+        }
+    )
+  }, [])
+
+  useEffect(() => {
+    fetch('http://localhost:3001/pub/visualizarInstrumentadores', {
+        method: 'GET',
+        headers: {
+        'content-type': 'application/json'
+        },
+    }).then(
+        (resposta) => {
+            return resposta.json()
+        }
+    ).then(
+        (retorno) => {
+          setInstrumentadorList(retorno.data.instrumentadores);
         }
     )
   }, [])
@@ -283,7 +301,7 @@ function CadastroRelatorio() {
                 <TextField
                   required
                   name="nomePaciente"
-                  style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
+                  style={{ marginTop: '1rem', width: '60%' }}
                   label="Paciente"
                   value={paciente}
                   onChange={updateInput(setPaciente)}
@@ -292,7 +310,7 @@ function CadastroRelatorio() {
                 <TextField
                   required
                   name="convenio"
-                  style={{ marginTop: '1rem', width: '40%' }}
+                  style={{ marginTop: '1rem', width: '60%' }}
                   label="Convênio"
                   value={convenio}
                   onChange={updateInput(setConvenio)}
@@ -309,7 +327,7 @@ function CadastroRelatorio() {
                       {...params}
                       label="Médico"
                       name='medico'
-                      style={{ marginTop: '1rem' }}
+                      style={{ marginTop: '1rem', width: '60%' }}
                     />
                   )}
                 />                   
@@ -317,25 +335,32 @@ function CadastroRelatorio() {
                 <TextField
                   required
                   name="medicoCrm"
-                  style={{ marginTop: '1rem', width: '40%', marginRight: '3px' }}
+                  style={{ marginTop: '1rem', width: '60%' }}
                   label="CRM"
                   value={medicoCrm}
                   onChange={updateInput(setMedicoCrm)}
+                />          
+                
+                <Autocomplete
+                  options={instrumentadorList}
+                  value={instrumentadorList.find(i => i.nome === instrumentador) ?? null}
+                  getOptionLabel={(instrumentador) => instrumentador.nome}
+                  onChange={(_, value) => setInstrumentador(value.nome)}
+                  style={{ marginTop: '1rem', width: '60%' }}
+                  renderInput={(params) => (
+                    <TextField
+                      required
+                      {...params}
+                      label="Instrumentador"
+                      name='instrumentador'
+                    />
+                  )}
                 />
 
                 <TextField
                   required
-                  name="instrumentador"
-                  style={{ marginTop: '1rem', marginRight: '0.4rem', width: '59%' }}
-                  label="Instrumentador"
-                  value={instrumentador}
-                  onChange={updateInput(setInstrumentador)}
-                />
-                
-                <TextField
-                  required
                   name="data"
-                  style={{ marginTop: '1rem', marginRight: '0.2rem', width: '19.8%' }}
+                  style={{ marginTop: '1rem', marginRight: '0.2rem', width: '30%' }}
                   label="Data"
                   value={data}
                   onChange={updateInput(setData)}
@@ -347,7 +372,7 @@ function CadastroRelatorio() {
                 <TextField
                   required
                   name="hora"
-                  style={{ marginTop: '1rem', width: '19.8%' }}
+                  style={{ marginTop: '1rem', width: '30%' }}
                   label="Hora"
                   value={hora}
                   onChange={updateInput(setHora)}
