@@ -9,6 +9,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import './assinar-relatorio.css';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import { fetchAutenticated } from '../../api';
 
 const style = {
     position: 'absolute',
@@ -51,10 +52,11 @@ const CardRelatorio = ({ relatorio, onClickAssinar }) => (
                         <br/>
                         <Typography>
                             Hospital: {relatorio.hospital} <br/>
-                            Médico: {relatorio.medico} <br/>
+                            Médico: {relatorio.medico?.nome} <br/>
                             CRM: {relatorio.medicoCrm} <br/>
                             Paciente: {relatorio.nomePaciente} <br/>
-                            Data e hora: {relatorio.data} <br/>
+                            Data: {relatorio.data.split('T')[0].split('-')[2] + '/' + relatorio.data.split('T')[0].split('-')[1] + '/' + relatorio.data.split('T')[0].split('-')[0]} <br/>
+                            Hora: {relatorio.data.split('T')[1].split('.')[0].split(':')[0] + ':' + relatorio.data.split('T')[1].split('.')[0].split(':')[1]} <br/>
                             Instrumentador: {relatorio.instrumentador} <br/>
                             Convênio: {relatorio.convenio}
                         </Typography>
@@ -86,7 +88,7 @@ function CadastroMedicos() {
     const [relatorios, setRelatorios] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3001/pub/visualizarRelatorios?assinatura=true', {
+        fetchAutenticated('/api/visualizarRelatorios?assinatura=true', {
             method: 'GET',
             headers: {
             'content-type': 'application/json'
@@ -142,11 +144,11 @@ function CadastroMedicos() {
                             aria-labelledby="modal-modal-title"
                             aria-describedby="modal-modal-description"
                         >
-                            <Box sx={style}>
+                            <Box sx={style} className='modal-assinatura'>
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     Cadastrar assinatura
                                 </Typography>
-                                <CanvasDraw lazyRadius='5' brushRadius='2' hideGrid ref={assinaturaRef}/>
+                                <CanvasDraw className='modal-assinatura' lazyRadius='5' brushRadius='2' hideGrid ref={assinaturaRef}/>
                                 
                                 <Button startIcon={<CheckIcon />} onClick={confirmarAssinatura}> Confirmar </Button>
                                 <Button startIcon={<CloseIcon />} onClick={handleClose}> Cancelar </Button>

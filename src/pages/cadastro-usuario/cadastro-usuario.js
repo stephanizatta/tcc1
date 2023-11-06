@@ -1,5 +1,5 @@
 import './cadastro-usuario.css';
-import { Box, Button, LinearProgress, Paper, TextField, Typography } from '@mui/material';
+import { Box, Button, LinearProgress, Paper, TextField, Typography, Tooltip } from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -8,8 +8,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import { fetchAutenticated } from '../../api';
 
-function CadastroUsuario() {
+function CadastroUsuario(props) {
+    console.log(props)
     const navigate = useNavigate ();
     const session = JSON.parse(localStorage.getItem("user_session"));
     const userSession = session.data.usuario.tipoDeUsuario;
@@ -20,6 +22,8 @@ function CadastroUsuario() {
     const [email, setEmail] = useState('');
     const [tipo, setTipo] = useState('');
     const [emailExistente, setEmailExistente] = useState(false);
+    const [passwordLenght, setPasswordLenght] = useState(true);
+    const [idPerfil, setIdPerfil] = useState('');
 
     function handleBackHome() {
         if (params.id) {
@@ -36,12 +40,17 @@ function CadastroUsuario() {
         var object = {};
         data.forEach((value, key) => object[key] = value);
 
+        if(object.senha.length < 8) {
+            setPasswordLenght(false);
+            return;
+        }
+
         if (object.senha !== object.repitaSenha) {
             setPasswordsMatch(false);
             return;
         }
 
-        if (!params.id) {
+        if (!params.id && !props.seEditar) {
             fetch('http://localhost:3001/pub/cadastrarUsuario', {
                 method: 'POST',
                 headers: {
@@ -52,13 +61,15 @@ function CadastroUsuario() {
                 if (response.status === 500) {
                     setEmailExistente(true);
                 } else {
+                    setPasswordLenght(true);
+                    setPasswordsMatch(true);
                     setEmailExistente(false);
                     setSuccessMessage(true);
                     setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000);
                 }
             });
         } else {
-            fetch(`http://localhost:3001/pub/editarUsuario/${params.id}`, {
+            fetch(`http://localhost:3001/pub/editarUsuario/${idPerfil || params.id}`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -68,9 +79,16 @@ function CadastroUsuario() {
                 if (response.status === 500) {
                     setEmailExistente(true);
                 } else {
+                    setPasswordLenght(true);
+                    setPasswordsMatch(true);
                     setEmailExistente(false);
                     setSuccessMessage(true);
-                    setTimeout(() => navigate('/usuarios-cadastrados'), 3000); 
+
+                    if (props.seEditar) {
+                        setTimeout(() => navigate('/home'), 3000); 
+                    } else {
+                        setTimeout(() => navigate('/usuarios-cadastrados'), 3000); 
+                    }
                 }
             });
         }
@@ -103,6 +121,28 @@ function CadastroUsuario() {
         }
     }, [params.id])
 
+    useEffect(() => {
+        if (props.seEditar !== undefined) {
+            fetchAutenticated('/api/visualizarPerfil', {
+                method: 'GET',
+                headers: {
+                'content-type': 'application/json'
+                },
+            }).then(
+                (resposta) => {
+                    return resposta.json()
+                }
+            ).then(
+                (retorno) => {
+                    setIdPerfil(retorno.data.usuario.id)
+                    setNome(retorno.data.usuario.nome);
+                    setEmail(retorno.data.usuario.email);
+                    setTipo(retorno.data.usuario.tipoDeUsuario);
+                }
+            )
+        }
+    }, [props.seEditar])
+
     return (
         <div className='backgroundCadastro'>
             <form onSubmit={onSubmit}>
@@ -110,7 +150,7 @@ function CadastroUsuario() {
                     <Paper elevation={3} sx={{ p: 3 }} style={{ width: '32rem' }}>
                         <Box component="h1" align="center" display='flex' justifyContent='center' flexDirection='column'>
 
-                            {!params.id && (
+                            {!params.id && !props.seEditar && (
                                 <Typography variant='h4' component='h1' align='center'>
                                     Cadastro de Usuário
                                 </Typography>
@@ -118,6 +158,11 @@ function CadastroUsuario() {
                             {params.id && (
                                 <Typography variant='h4' component='h1' align='center'>
                                     Edição de Usuário
+                                </Typography>
+                            )}
+                            {props.seEditar && (
+                                <Typography variant='h4' component='h1' align='center'>
+                                    Editar perfil
                                 </Typography>
                             )}
                             
@@ -139,22 +184,42 @@ function CadastroUsuario() {
                                 onChange={updateInput(setEmail)}                        
                             />
                             
-                            <FormControl
-                                style={{marginTop: '1rem'}}
-                                >
-                                <InputLabel id="demo-simple-select-label">Tipo de usuário</InputLabel>
-                                <Select
-                                    required
-                                    value={tipo}
-                                    label="Tipo de usuário"
-                                    name='tipoDeUsuario'
-                                    onChange={updateInput(setTipo)}                        
-                                >
-                                    <MenuItem value="admin">Administrador</MenuItem>
-                                    <MenuItem value="financeiro">Financeiro</MenuItem>
-                                    <MenuItem value="instrumentador">Instrumentador</MenuItem>
-                                </Select>
-                            </FormControl>
+                            {!props.seEditar && (
+                                <FormControl style={{marginTop: '1rem'}}>
+                                    <InputLabel id="demo-simple-select-label">Tipo de usuário</InputLabel>
+                                    <Select
+                                        required
+                                        value={tipo}
+                                        label="Tipo de usuário"
+                                        name='tipoDeUsuario'
+                                        onChange={updateInput(setTipo)}                        
+                                    >
+                                        <MenuItem value="admin">Administrador</MenuItem>
+                                        <MenuItem value="financeiro">Financeiro</MenuItem>
+                                        <MenuItem value="instrumentador">Instrumentador</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            )}
+
+                            {props.seEditar && (
+                                <FormControl style={{marginTop: '1rem'}}>
+                                    <InputLabel id="demo-simple-select-label">Tipo de usuário</InputLabel>
+                                    <Tooltip title="Não é possível a edição do tipo de usuário">
+                                        <Select
+                                            disabled
+                                            value={tipo}
+                                            label="Tipo de usuário"
+                                            name='tipoDeUsuario'
+                                            onChange={updateInput(setTipo)}                        
+                                        >
+                                            <MenuItem value="admin">Administrador</MenuItem>
+                                            <MenuItem value="financeiro">Financeiro</MenuItem>
+                                            <MenuItem value="instrumentador">Instrumentador</MenuItem>
+                                            <MenuItem value="medico">Médico</MenuItem>
+                                        </Select>
+                                    </Tooltip>
+                                </FormControl>
+                            )}
                             
                             <TextField
                                 required
@@ -171,6 +236,7 @@ function CadastroUsuario() {
                                 type="password"
                                 name='repitaSenha'
                             />
+
                             {!passwordsMatch && (
                                 <Box mt={2} width='100%'>
                                     <Alert severity="error">
@@ -185,6 +251,15 @@ function CadastroUsuario() {
                                     <AlertTitle>Email já existente</AlertTitle>
                                 </Alert>
                             </Box>
+                            )}
+
+
+                            {!passwordLenght && (
+                                <Box mt={2} width='100%'>
+                                    <Alert severity="error">
+                                        <AlertTitle>A senha precisar ter 8 ou mais caracteres</AlertTitle>
+                                    </Alert>
+                                </Box>
                             )}
                             
                             <Box style={{ marginTop: '1rem' }}>                                                            
@@ -205,6 +280,7 @@ function CadastroUsuario() {
                                     Voltar
                                 </Button>
                             </Box>
+
                             {successMessage && (
                                 <Box mt={2} width='100%'>
                                     <Alert severity="success">

@@ -7,59 +7,80 @@ import CardContent from '@mui/material/CardContent';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { Link, useNavigate } from 'react-router-dom';
+import Modal from '@mui/material/Modal';
+import { fetchAutenticated } from '../../api';
 
 function RelatoriosCadastrados() {
     const navigate = useNavigate();
     const session = JSON.parse(localStorage.getItem("user_session"));
     const userType = session.data.usuario.tipoDeUsuario;
     const [relatorios, setRelatorios] = useState([]);
+    const [open, setOpen] = React.useState(false);
+    const [idSelecionado, setIdSelecionado] = useState('');
+
+    function handleOpen(id) {
+        setIdSelecionado(id);
+        setOpen(true);
+    }
+
+    const handleClose = () => {
+        setIdSelecionado('');
+        setOpen(false);
+    };
+
 
    function handleBackHome() {
-       navigate('/home?is'+{userType}+'=true');
+       navigate('/home?is'+{userType}+'=true')
    }
 
     function deleteRelatorio(relatorioId) {
+        handleClose();
+
         fetch(`http://localhost:3001/pub/excluirRelatorio/${relatorioId}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify({}), 
-        
+            body: JSON.stringify({}),        
         }).then(() => {
-            fetch('http://localhost:3001/pub/visualizarRelatorios', {
-                method: 'GET',
-                headers: {
-                    'content-type': 'application/json'
-                },
-            }).then((resposta) => resposta.json())
-              .then((retorno) => {
-                  setRelatorios(retorno.data.relatorios);
-              });
+            setRelatorios((prevRelatorios) =>
+              prevRelatorios.filter((relatorio) => relatorio.id !== relatorioId)
+            );
         });
     }
 
     useEffect(() => {
-        fetch('http://localhost:3001/pub/visualizarRelatorios', {
+        fetchAutenticated('/api/visualizarRelatorios', {
             method: 'GET',
             headers: {
-            'content-type': 'application/json'
+              'content-type': 'application/json'
             },
-        }).then(
-            (resposta) => {
-                return resposta.json()
-            }
-        ).then(
-            (retorno) => {
-                setRelatorios(retorno.data.relatorios);
-            }
-        )
+        }).then((resposta) => resposta.json())
+        .then((retorno) => {
+          setRelatorios(retorno.data.relatorios);
+        })
+        .catch((error) => {
+          console.error('Error fetching reports:', error);
+        });
     }, [])
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 300,
+        bgcolor: 'background.paper',
+        border: '1px solid #000',
+        boxShadow: 24,
+        p: 4,
+        borderRadius: '5px',
+    };
 
     return (
         <div className='backgroundRelatoriosCadastrados'>
-        <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
-            <Paper elevation={3} sx={{ p: 3 }} style={{ width: '80%' }}>
+            <Box display='flex' justifyContent='center' style={{ width: '100%' }}>
+                <Paper elevation={3} sx={{ p: 3 }} style={{ width: '80%' }}>
                     <Box display='flex' justifyContent='center' flexDirection='column'>
                         <Typography variant='h4' component='h1' align='center'>
                             Relatórios Cadastrados
@@ -86,7 +107,7 @@ function RelatoriosCadastrados() {
                                                         ))}
 
                                                         Hospital: {relatorio.hospital} <br/>
-                                                        Médico: {relatorio.medico} <br/>
+                                                        Médico: {relatorio.medico?.nome} <br/>
                                                         CRM: {relatorio.medicoCrm} <br/>
                                                         Paciente: {relatorio.nomePaciente} <br/>
                                                         Data: {relatorio.data.split('T')[0].split('-')[2] + '/' + relatorio.data.split('T')[0].split('-')[1] + '/' + relatorio.data.split('T')[0].split('-')[0]} <br/>
@@ -95,7 +116,7 @@ function RelatoriosCadastrados() {
                                                         Convênio: {relatorio.convenio} <br/>
                                                         Assinatura do médico: <br/>
                                                         {relatorio.assinaturaMedico && <img alt="Assinatura" src={relatorio.assinaturaMedico}/>}
-                                                       
+                                                    
                                                         {!relatorio.assinaturaMedico && (
                                                             <Typography variant='h6' component='h6' align='center'>
                                                                 Relatório ainda não assinado
@@ -111,33 +132,56 @@ function RelatoriosCadastrados() {
                                                             </Link>
                                                             <Button 
                                                                 color='error' 
-                                                                startIcon={<DeleteIcon />} 
-                                                                onClick={() => deleteRelatorio(relatorio.id)}
+                                                                startIcon={<DeleteIcon />}
+                                                                onClick={() => handleOpen(relatorio.id)}
                                                             />
                                                         </CardActions>
-                                                    </Box>
+                                                    </Box>                                                
                                                 </Box>
                                             </CardContent>
                                         </Card>
                                     </Grid>
                                 ))}
                             </Grid>
+                        </Box>                     
+
+                        <Button
+                            color='primary'
+                            variant='contained'
+                            style={{ width: '7rem', marginTop: '1rem' }}
+                            onClick={handleBackHome}
+                        >
+                            Voltar
+                        </Button>
+                    </Box>
+                </Paper>
+            </Box>
+            {open && (
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-title"
+                    aria-describedby="modal-description"
+                >
+                    <Box sx={style}>
+                        <Typography id="modal-title" variant="h6" component="h2">
+                            Confirmar exclusão
+                        </Typography>
+                        <Typography id="modal-description" sx={{ marginTop: '1rem' }}>
+                            Tem certeza de que deseja excluir este material?
+                        </Typography>
+                        <Box sx={{ display: 'flex', justifyContent: 'space-around', marginTop: '2rem' }}>
+                            <Button variant="contained" color="primary" onClick={() => deleteRelatorio(idSelecionado)}>
+                                Confirmar
+                            </Button>
+                            <Button variant="contained" color="error" onClick={handleClose}>
+                                Cancelar
+                            </Button>
                         </Box>
                     </Box>
-
-                    <Box>
-                    <Button
-                        color='primary'
-                        variant='contained'
-                        style={{ width: '7rem', marginTop: '1rem' }}
-                        onClick={handleBackHome}
-                    >
-                        Voltar
-                    </Button>
-                </Box>
-            </Paper>
-        </Box>
-    </div>
+                </Modal>
+            )}
+        </div>
     );
 }
 

@@ -63,7 +63,8 @@ function CadastroRelatorio() {
     data.forEach((value, key) => object[key] = value);
     
     object.materiaisList = materiaisList;
-
+    object.medico = medico;
+   
     if (!params.id) {
       fetch('http://localhost:3001/pub/cadastrarRelatorio', {
           method: 'POST',
@@ -318,9 +319,9 @@ function CadastroRelatorio() {
 
                 <Autocomplete
                   options={medicosList}
-                  value={medicosList.find(m => m.nome === medico) ?? null}
+                  value={medicosList.find(m => m.id === medico) ?? null}
                   getOptionLabel={(medico) => medico.nome}
-                  onChange={(_, value) => setMedico(value.nome)}
+                  onChange={(_, value) => setMedico(value.id)}
                   renderInput={(params) => (
                     <TextField
                       required
@@ -402,13 +403,14 @@ function CadastroRelatorio() {
                   Voltar
               </Button>
             </Box>
+
             {successMessage && (
-                <Box mt={2} width='100%'>
-                    <Alert severity="success">
-                        <AlertTitle> Salvo com sucesso! </AlertTitle>
-                        <LinearProgress color="success" size={24} />                                        
-                    </Alert>
-                </Box>
+              <Box mt={2} width='100%'>
+                <Alert severity="success">
+                    <AlertTitle> Salvo com sucesso! </AlertTitle>
+                    <LinearProgress color="success" size={24} />                                        
+                </Alert>
+              </Box>
             )}
           </Box>
         </Paper>

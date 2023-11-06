@@ -15,7 +15,7 @@ function EsqueceuSenha() {
                         <Typography variant="h4" component="h1" align="center">Esqueceu a senha?</Typography>
                         <br />
                         <Typography  component="h4" align="left">
-                            Favor entrar em contato com o número (00) 0000-0000 ou 
+                            Favor entrar em contato com o 
                             e-mail orthodoc@orthodoc.com.br para a redefinição de senha.
                         </Typography>
                         <br/>

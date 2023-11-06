@@ -28,6 +28,7 @@ function CadastroMedicos() {
     const navigate = useNavigate ();
     const [successMessage, setSuccessMessage] = useState(false);
     const [passwordsMatch, setPasswordsMatch] = useState(true);
+    const [passwordLenght, setPasswordLenght] = useState(true);
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [crm, setCrm] = useState('');
@@ -52,6 +53,11 @@ function CadastroMedicos() {
 
         object.assinaturaMedico = assinatura;
 
+        if(object.senha.length < 8) {
+            setPasswordLenght(false);
+            return;
+        }
+
         if (object.senha !== object.repitaSenha) {
             setPasswordsMatch(false);
             return;
@@ -70,6 +76,8 @@ function CadastroMedicos() {
                 },
                 body: JSON.stringify(object),
             }).then(() => {
+                setPasswordLenght(true);
+                setPasswordsMatch(true);
                 setSuccessMessage(true);
                 setTimeout(() => navigate('/'), 3000);
             });
@@ -81,6 +89,8 @@ function CadastroMedicos() {
                 },
                 body: JSON.stringify(object),
             }).then(() => {
+                setPasswordLenght(true);
+                setPasswordsMatch(true);
                 setSuccessMessage(true); 
                 setTimeout(() => navigate('/usuarios-cadastrados'), 3000); 
             });
@@ -177,8 +187,8 @@ function CadastroMedicos() {
                                             value={tipo}
                                             label="Tipo de usuário"
                                             name='tipoDeUsuario'
-                                            onChange={updateInput(setTipo)}>
-
+                                            onChange={updateInput(setTipo)}
+                                        >
                                             <MenuItem value="medico">Médico</MenuItem>
                                         </Select>
                                     </Tooltip>
@@ -224,6 +234,15 @@ function CadastroMedicos() {
                                 type="password"
                                 name='repitaSenha'
                             />
+
+                            {!passwordLenght && (
+                                <Box mt={2} width='100%'>
+                                    <Alert severity="error">
+                                        <AlertTitle>A senha precisar ter 8 ou mais caracteres</AlertTitle>
+                                    </Alert>
+                                </Box>
+                            )}
+
                             {!passwordsMatch && (
                                 <Box mt={2} width='100%'>
                                     <Alert severity="error">
@@ -232,7 +251,7 @@ function CadastroMedicos() {
                                 </Box>
                             )}
 
-                            {!assinaturaPreenchida && (
+                            {!assinaturaPreenchida && !params.id && (
                                 <Box mt={2} width='100%'>
                                     <Alert severity="error">
                                         <AlertTitle>Cadastre a assinatura</AlertTitle>

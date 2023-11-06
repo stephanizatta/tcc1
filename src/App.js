@@ -51,6 +51,10 @@ const router = createBrowserRouter([
     element: <CadastroUsuario />,
   },
   {
+    path: "/editar-perfil",
+    element: <CadastroUsuario seEditar />,
+  },
+  {
     path: "/relatorios-cadastrados",
     element: <RelatoriosCadastrados />,
   },

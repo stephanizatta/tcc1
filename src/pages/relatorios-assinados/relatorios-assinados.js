@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useNavigate } from 'react-router-dom';
 import './relatorios-assinados.css';
+import { fetchAutenticated } from '../../api';
 
 function RelatoriosAssinados() {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ function RelatoriosAssinados() {
     }
 
     useEffect(() => {
-        fetch('http://localhost:3001/pub/visualizarRelatorios', {
+        fetchAutenticated('/api/visualizarRelatorios', {
             method: 'GET',
             headers: {
             'content-type': 'application/json'
@@ -74,7 +75,7 @@ function RelatoriosAssinados() {
                                                             Convênio: {relatorio.convenio} <br/>
 
                                                             <h2>Assinatura</h2>                                                            
-                                                            Médico: {relatorio.medico} <br/>
+                                                            Médico: {relatorio.medico.nome} <br/>
                                                             CRM: {relatorio.medicoCrm} <br/>
                                                             {relatorio.assinaturaMedico && <img alt="Assinatura" src={relatorio.assinaturaMedico}/>}
                                                         </Typography>
