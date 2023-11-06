@@ -91,7 +91,7 @@ function CadastroRelatorio() {
   }
 
   useEffect(() => {
-    fetch('http://localhost:3001/pub/visualizarMateriais', {
+    fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/visualizarMateriais`, {
         method: 'GET',
         headers: {
         'content-type': 'application/json'
