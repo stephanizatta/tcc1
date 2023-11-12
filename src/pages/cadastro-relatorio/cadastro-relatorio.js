@@ -66,7 +66,7 @@ function CadastroRelatorio() {
     object.medico = medico;
    
     if (!params.id) {
-      fetch('http://localhost:3001/pub/cadastrarRelatorio', {
+      fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/cadastrarRelatorio`, {
           method: 'POST',
           headers: {
               'content-type': 'application/json'
@@ -77,7 +77,7 @@ function CadastroRelatorio() {
           setTimeout(() => navigate('/home?is'+ userSession +'=true'), 3000);
       });
     } else {
-      fetch(`http://localhost:3001/pub/editarRelatorio/${params.id}`, {
+      fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/editarRelatorio/${params.id}`, {
           method: 'POST',
           headers: {
               'content-type': 'application/json'
@@ -108,7 +108,7 @@ function CadastroRelatorio() {
   }, [])
 
   useEffect(() => {
-    fetch('http://localhost:3001/pub/visualizarMedicos', {
+    fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/visualizarMedicos`, {
         method: 'GET',
         headers: {
         'content-type': 'application/json'
@@ -125,7 +125,7 @@ function CadastroRelatorio() {
   }, [])
 
   useEffect(() => {
-    fetch('http://localhost:3001/pub/visualizarInstrumentadores', {
+    fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/visualizarInstrumentadores`, {
         method: 'GET',
         headers: {
         'content-type': 'application/json'
@@ -143,7 +143,7 @@ function CadastroRelatorio() {
 
   useEffect(() => {
     if (params.id) {
-        fetch(`http://localhost:3001/pub/visualizarRelatorios?id=${params.id}`, {
+        fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/visualizarRelatorios?id=${params.id}`, {
             method: 'GET',
             headers: {
             'content-type': 'application/json'

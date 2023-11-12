@@ -48,7 +48,7 @@ function CadastroMaterial() {
         data.forEach((value, key) => object[key] = value);
     
         if (!params.id) {
-            fetch('http://localhost:3001/pub/cadastrarMaterial', {
+            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/cadastrarMaterial`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -64,7 +64,7 @@ function CadastroMaterial() {
                 }
             });
         } else {
-            fetch(`http://localhost:3001/pub/editarMaterial/${params.id}`, {
+            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/editarMaterial/${params.id}`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -79,7 +79,7 @@ function CadastroMaterial() {
 
     useEffect(() => {
         if (params.id) {
-            fetch(`http://localhost:3001/pub/visualizarMateriais?id=${params.id}`, {
+            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/visualizarMateriais?id=${params.id}`, {
                 method: 'GET',
                 headers: {
                 'content-type': 'application/json'

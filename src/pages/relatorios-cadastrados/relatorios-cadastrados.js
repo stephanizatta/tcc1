@@ -36,7 +36,7 @@ function RelatoriosCadastrados() {
     function deleteRelatorio(relatorioId) {
         handleClose();
 
-        fetch(`http://localhost:3001/pub/excluirRelatorio/${relatorioId}`, {
+        fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/excluirRelatorio/${relatorioId}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -114,7 +114,7 @@ function CadastroMedicos() {
     async function confirmarAssinatura() {
         const dataUrl =  assinaturaRef.current.getDataURL();
 
-        fetch(`http://localhost:3001/pub/assinarRelatorio/${relatorioAssinar.id}`, {
+        fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/assinarRelatorio/${relatorioAssinar.id}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -51,7 +51,7 @@ function CadastroUsuario(props) {
         }
 
         if (!params.id && !props.seEditar) {
-            fetch('http://localhost:3001/pub/cadastrarUsuario', {
+            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/cadastrarUsuario`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -69,7 +69,7 @@ function CadastroUsuario(props) {
                 }
             });
         } else {
-            fetch(`http://localhost:3001/pub/editarUsuario/${idPerfil || params.id}`, {
+            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/editarUsuario/${idPerfil || params.id}`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -102,7 +102,7 @@ function CadastroUsuario(props) {
 
     useEffect(() => {
         if (params.id) {
-            fetch(`http://localhost:3001/pub/visualizarUsuarios?id=${params.id}`, {
+            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/visualizarUsuarios?id=${params.id}`, {
                 method: 'GET',
                 headers: {
                 'content-type': 'application/json'

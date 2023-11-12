@@ -34,7 +34,7 @@ function UsuariosCadastrados() {
     function deleteUsuario(usuarioId) {
         handleClose();
 
-        fetch(`http://localhost:3001/pub/excluirUsuario/${usuarioId}`, {
+        fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/excluirUsuario/${usuarioId}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -42,7 +42,7 @@ function UsuariosCadastrados() {
             body: JSON.stringify({}), 
         
         }).then(() => {
-            fetch('http://localhost:3001/pub/visualizarUsuarios', {
+            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/visualizarUsuarios`, {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json'
@@ -55,7 +55,7 @@ function UsuariosCadastrados() {
     }
 
     useEffect(() => {
-        fetch('http://localhost:3001/pub/visualizarUsuarios', {
+        fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/visualizarUsuarios`, {
             method: 'GET',
             headers: {
             'content-type': 'application/json'

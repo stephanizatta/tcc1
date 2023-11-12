@@ -69,7 +69,7 @@ function CadastroMedicos() {
         }
 
         if (!params.id) {
-            fetch('http://localhost:3001/pub/cadastrarUsuario', {
+            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/cadastrarUsuario`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -82,7 +82,7 @@ function CadastroMedicos() {
                 setTimeout(() => navigate('/'), 3000);
             });
         } else {
-            fetch(`http://localhost:3001/pub/editarUsuario/${params.id}`, {
+            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/editarUsuario/${params.id}`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -121,7 +121,7 @@ function CadastroMedicos() {
 
     useEffect(() => {
         if (params.id) {
-            fetch(`http://localhost:3001/pub/visualizarUsuarios?id=${params.id}`, {
+            fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/visualizarUsuarios?id=${params.id}`, {
                 method: 'GET',
                 headers: {
                 'content-type': 'application/json'
