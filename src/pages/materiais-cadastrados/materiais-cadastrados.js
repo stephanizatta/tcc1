@@ -99,18 +99,20 @@ function MateriaisCadastrados() {
                                             <CardContent>
                                                 <Box display='flex' alignItems='center'>
                                                     <Typography>{material.descricao}</Typography>
-                                                    <Box ml='auto'>
-                                                        <CardActions>
-                                                            <Link to={"/cadastro-material/" + material.id}>
-                                                                <Button startIcon={<EditIcon />} />
-                                                            </Link>
-                                                            <Button
-                                                                color='error'
-                                                                startIcon={<DeleteIcon />}
-                                                                onClick={() => handleOpen(material.id)}
-                                                            />
-                                                        </CardActions>
-                                                    </Box>
+                                                    {userType !== "financeiro" && (
+                                                        <Box ml='auto'>
+                                                            <CardActions>
+                                                                <Link to={"/cadastro-material/" + material.id}>
+                                                                    <Button startIcon={<EditIcon />} />
+                                                                </Link>
+                                                                <Button
+                                                                    color='error'
+                                                                    startIcon={<DeleteIcon />}
+                                                                    onClick={() => handleOpen(material.id)}
+                                                                />
+                                                            </CardActions>
+                                                        </Box>
+                                                    )}
                                                 </Box>
                                             </CardContent>
                                         </Card>

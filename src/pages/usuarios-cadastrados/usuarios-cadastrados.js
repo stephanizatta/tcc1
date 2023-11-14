@@ -120,7 +120,7 @@ function UsuariosCadastrados() {
                                                         </Typography>
                                                     )}
 
-                                                    {usuario.tipoDeUsuario !== "admin" && (
+                                                    {usuario.tipoDeUsuario !== "admin" && userType === "admin" && (
                                                         <Box ml='auto'>
                                                             <CardActions>
                                                                 {usuario.tipoDeUsuario !== "medico" && (

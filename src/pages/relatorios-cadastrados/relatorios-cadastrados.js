@@ -130,11 +130,13 @@ function RelatoriosCadastrados() {
                                                             <Link to={"/cadastro-relatorio/" + relatorio.id}>
                                                                 <Button startIcon={<EditIcon />} />
                                                             </Link>
-                                                            <Button 
-                                                                color='error' 
-                                                                startIcon={<DeleteIcon />}
-                                                                onClick={() => handleOpen(relatorio.id)}
-                                                            />
+                                                            {userType === "admin" && (
+                                                                <Button 
+                                                                    color='error' 
+                                                                    startIcon={<DeleteIcon />}
+                                                                    onClick={() => handleOpen(relatorio.id)}
+                                                                />
+                                                            )}
                                                         </CardActions>
                                                     </Box>                                                
                                                 </Box>
