@@ -10,7 +10,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import { fetchAutenticated } from '../../api';
 
-function CadastroUsuario(props) {
+function FCadastroUsuario(props) {
     console.log(props)
     const navigate = useNavigate ();
     const session = JSON.parse(localStorage.getItem("user_session"));

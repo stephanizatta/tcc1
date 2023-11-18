@@ -9,7 +9,7 @@ const getTokenIfLogged = () => {
     
 }
 
-export const fetchAutenticated = (url, params) => fetch(process.env.REACT_APP_API_URL || "http://localhost:3001"+url, {
+export const fetchAutenticated = (url, params) => fetch((process.env.REACT_APP_API_URL || "http://localhost:3001")+url, {
     ...params,
     headers: {
         ...params.headers,
