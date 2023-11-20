@@ -119,30 +119,33 @@ function UsuariosCadastrados() {
                                                             {usuario.assinaturaMedico && <img alt="Assinatura" src={usuario.assinaturaMedico}/>}
                                                         </Typography>
                                                     )}
-
-                                                    {usuario.tipoDeUsuario !== "admin" && userType === "admin" && (
-                                                        <Box ml='auto'>
-                                                            <CardActions>
-                                                                {usuario.tipoDeUsuario !== "medico" && (
-                                                                    <Link to={"/cadastro-usuario/" + usuario.id}>
-                                                                        <Button startIcon={<EditIcon />} />
-                                                                    </Link>
-                                                                )}  
-                                                                {usuario.tipoDeUsuario === "medico" && (
-                                                                    <Link to={"/cadastro-medicos/" + usuario.id}>
-                                                                        <Button startIcon={<EditIcon />} />
-                                                                    </Link>
-                                                                )}
-
-                                                                <Button 
-                                                                    color='error' 
-                                                                    startIcon={<DeleteIcon />} 
-                                                                    onClick={() => handleOpen(usuario.id)}
-                                                                />
-                                                            </CardActions>
-                                                        </Box>
-                                                    )}
                                                 </Box>
+
+                                                <br/>
+
+                                                {usuario.tipoDeUsuario !== "admin" && userType === "admin" && (
+                                                    <Box>
+                                                        <CardActions>
+                                                            {usuario.tipoDeUsuario !== "medico" && (
+                                                                <Link to={"/cadastro-usuario/" + usuario.id}>
+                                                                    <Button startIcon={<EditIcon />} />
+                                                                </Link>
+                                                            )}  
+                                                            {usuario.tipoDeUsuario === "medico" && (
+                                                                <Link to={"/cadastro-medicos/" + usuario.id}>
+                                                                    <Button startIcon={<EditIcon />} />
+                                                                </Link>
+                                                            )}
+
+                                                            <Button 
+                                                                color='error' 
+                                                                startIcon={<DeleteIcon />} 
+                                                                onClick={() => handleOpen(usuario.id)}
+                                                            />
+                                                        </CardActions>
+                                                    </Box>
+                                                )}
+                                                
                                             </CardContent>
                                         </Card>
                                     </Grid>
