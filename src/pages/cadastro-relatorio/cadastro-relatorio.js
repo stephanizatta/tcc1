@@ -3,6 +3,7 @@ import { Box, Button, Paper, TextField, Typography, Divider, Alert, AlertTitle, 
 import React, { useState, useEffect } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate, useParams } from 'react-router-dom';
+import { fetchAutenticated } from '../../api';
 
 function CadastroRelatorio() {
   const [materiaisList, setMateriaisList] = useState([{ referencia: '', quantidade: '', descricao: '', lote: '' }]);
@@ -143,7 +144,7 @@ function CadastroRelatorio() {
 
   useEffect(() => {
     if (params.id) {
-        fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:3001'}/pub/visualizarRelatorios?id=${params.id}`, {
+      fetchAutenticated('/api/visualizarRelatorios', {
             method: 'GET',
             headers: {
             'content-type': 'application/json'
@@ -168,8 +169,6 @@ function CadastroRelatorio() {
             setPaciente(retorno.data.relatorios[0].nomePaciente);
             setHospital(retorno.data.relatorios[0].hospital);
             setConvenio(retorno.data.relatorios[0].convenio);
-            setData(retorno.data.relatorios[0].createdAt.split('T')[0]);
-            setHora(retorno.data.relatorios[0].createdAt.split('T')[1].split('.')[0]);
           }
         )
     }
