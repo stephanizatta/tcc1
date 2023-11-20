@@ -289,7 +289,7 @@ function CadastroMedicos() {
                                         <Typography id="modal-modal-title" variant="h6" component="h2">
                                             Cadastrar assinatura
                                         </Typography>
-                                        <CanvasDraw lazyRadius='20' brushRadius='5' hideGrid ref={assinaturaRef}/>
+                                        <CanvasDraw lazyRadius='1' brushRadius='1' hideGrid ref={assinaturaRef}/>
                                         
                                         <Button startIcon={<CheckIcon />} onClick={confirmar}> Confirmar </Button>
                                         <Button startIcon={<CloseIcon />} onClick={handleClose}> Cancelar </Button>
