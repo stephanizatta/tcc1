@@ -302,20 +302,24 @@ function CadastroRelatorio() {
                 <TextField
                   required
                   name="nomePaciente"
-                  style={{ marginTop: '1rem', width: '60%' }}
+                  style={{ marginTop: '1rem', marginBottom: '1rem', width: '60%' }}
                   label="Paciente"
                   value={paciente}
                   onChange={updateInput(setPaciente)}
                 />
 
+                <Typography style={{ fontSize: '14px', color: 'grey' }}>
+                  Caso não tenha convênio, preencher com "não". <br/>
+                  Caso seja SUS, preencher com "SUS".
+                </Typography>              
                 <TextField
                   required
                   name="convenio"
-                  style={{ marginTop: '1rem', width: '60%' }}
+                  style={{ width: '60%' }}
                   label="Convênio"
                   value={convenio}
                   onChange={updateInput(setConvenio)}
-                />              
+                />
 
                 <Autocomplete
                   options={medicosList}
