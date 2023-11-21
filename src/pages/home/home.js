@@ -137,15 +137,15 @@ function Home() {
 
                         {userType === "medico" && (
                         <React.Fragment>
-                            <Link to='/relatorios-assinados' align='center'>
-                                <Button variant='text'>
-                                    Ver Relatórios Assinados
-                                </Button>
-                            </Link>
-                            <Divider/>
                             <Link to='/assinar-relatorio' align='center'>
                                 <Button variant='text'>
                                     Assinar Relatório
+                                </Button>
+                            </Link>
+                            <Divider/>
+                            <Link to='/relatorios-assinados' align='center'>
+                                <Button variant='text'>
+                                    Ver Relatórios Assinados
                                 </Button>
                             </Link>
                         </React.Fragment>
