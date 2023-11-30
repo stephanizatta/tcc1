@@ -170,7 +170,7 @@ function RelatoriosCadastrados() {
                             Confirmar exclusão
                         </Typography>
                         <Typography id="modal-description" sx={{ marginTop: '1rem' }}>
-                            Tem certeza de que deseja excluir este material?
+                            Tem certeza de que deseja excluir este relatório?
                         </Typography>
                         <Box sx={{ display: 'flex', justifyContent: 'space-around', marginTop: '2rem' }}>
                             <Button variant="contained" color="primary" onClick={() => deleteRelatorio(idSelecionado)}>
